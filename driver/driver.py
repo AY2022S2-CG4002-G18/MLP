@@ -2,7 +2,6 @@ import pynq.lib.dma
 import numpy as np
 from pynq import allocate
 from pynq import Overlay
-from pynq import Xlnk
 
 def predictor(x):
     #quantise input

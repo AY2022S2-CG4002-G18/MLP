@@ -1,0 +1,7 @@
+Contains connection detail for FPGA
+
+ssh cairong@sunfire.comp.nus.edu.sg
+pw: zmq
+
+ssh xilinx@137.132.86.241
+pw : xilinx
