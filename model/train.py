@@ -116,6 +116,11 @@ class Trainer:
         self.y_train = self.y_train.astype('float32')
 
         self.y_train_hot = np_utils.to_categorical(self.y_train, num_classes)
+
+        print(self.x_train.shape[0])
+        print(self.input_shape)
+        brak = input()
+
         print('New y_train shape: ', self.y_train_hot.shape)
 
     def initialise_test(self):

@@ -19,7 +19,7 @@ def create_segments_and_labels(df, time_steps, step, label_name):
         labels.append(label)
 
     # Bring the segments into a better shape
-    reshaped_segments = np.asarray(segments, dtype= np.float32).reshape(-1, time_steps, N_FEATURES)
+    reshaped_segments = np.asarray(segments, dtype=np.float32).reshape(-1, time_steps, N_FEATURES)
     labels = np.asarray(labels)
 
     return reshaped_segments, labels

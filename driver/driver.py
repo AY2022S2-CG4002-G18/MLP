@@ -7,9 +7,9 @@ import time
 print("Running PYNQ Driver")
 
 def predictor(x):
-    #quantise input
+    # quantise input
     x = (x * 255).astype(np.int32)
-    #load overlay
+    # load overlay
     ol = Overlay("./driver_content/design_2.bit")
     dma = ol.axi_dma_0
     with allocate(shape=(x.shape), dtype=np.int32) as input_buffer:
@@ -22,9 +22,9 @@ def predictor(x):
             return np.argmax(output_buffer[0:9], axis=0)
 
 def measure_time(x):
-    #quantise input
+    # quantise input
     x = (x * 255).astype(np.int32)
-    #load overlay
+    # load overlay
     ol = Overlay("./driver_content/design_2.bit")
     dma = ol.axi_dma_0
     with allocate(shape=(x.shape), dtype=np.int32) as input_buffer:
@@ -36,5 +36,3 @@ def measure_time(x):
             dma.sendchannel.wait()
             dma.recvchannel.wait()
             return time.time() - start
-
-predictor(1)

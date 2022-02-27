@@ -61,7 +61,6 @@ def visualize_data(df):
     return
 
 def plot_activity(activity, data):
-
     fig, (ax0, ax1, ax2) = plt.subplots(nrows=3,
          figsize=(15, 10),
          sharex=True)
@@ -74,10 +73,14 @@ def plot_activity(activity, data):
     plt.show()
 
 def plot_axis(ax, x, y, title):
-
     ax.plot(x, y, 'r')
     ax.set_title(title)
     ax.xaxis.set_visible(False)
     ax.set_ylim([min(y) - np.std(y), max(y) + np.std(y)])
     ax.set_xlim([min(x), max(x)])
     ax.grid(True)
+
+
+def read_and_transform_input(filepath):
+    # x, y, z acceleration as features
+    return
