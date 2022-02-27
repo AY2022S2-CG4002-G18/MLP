@@ -12,7 +12,7 @@ def convert_to_float(x):
 
 def main():
     column_names = ['x-axis', 'y-axis', 'z-axis']
-    df = pd.read_csv("./driver/driver_content/sample_data.txt",
+    df = pd.read_csv("./driver_content/sample_data.txt",
                      header=None,
                      names=column_names)
     # Last column has a ";" character which must be removed ...
