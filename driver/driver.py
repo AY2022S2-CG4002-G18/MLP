@@ -2,6 +2,9 @@ import pynq.lib.dma
 import numpy as np
 from pynq import allocate
 from pynq import Overlay
+import time
+
+print("Running PYNQ Driver")
 
 def predictor(x):
     #quantise input
@@ -17,8 +20,6 @@ def predictor(x):
             dma.sendchannel.wait()
             dma.recvchannel.wait()
             return np.argmax(output_buffer[0:9], axis=0)
-
-import time
 
 def measure_time(x):
     #quantise input
