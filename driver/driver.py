@@ -36,3 +36,5 @@ def measure_time(x):
             dma.sendchannel.wait()
             dma.recvchannel.wait()
             return time.time() - start
+
+predictor(1)
