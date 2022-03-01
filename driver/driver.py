@@ -9,7 +9,7 @@ print("Running PYNQ Driver")
 def predictor(x):
     x = (x * 255).astype(np.int32)
     # load overlay
-    ol = Overlay("./driver_content/design.bit")
+    ol = Overlay("./driver_content/design_2.bit")
     dma = ol.axi_dma_0
     with allocate(shape=(x.shape), dtype=np.int32) as input_buffer:
         input_buffer[:] = x
