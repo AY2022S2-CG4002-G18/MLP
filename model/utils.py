@@ -23,3 +23,85 @@ def create_segments_and_labels(df, time_steps, step, label_name):
     labels = np.asarray(labels)
 
     return reshaped_segments, labels
+
+
+def save_2d_weight_to_txt_file(np_array, filepath):
+    """
+    Takes in an np_array and filepath, convert the NP array into string and
+    writes to the file
+    """
+    weights_to_write = []
+    for i in range(len(np_array)):
+        weights_to_write_string = ""
+        for j in range(len(np_array[i])):
+            weights_to_write_string += str(np_array[i][j])
+            weights_to_write_string += ","
+        # replace trailing comma with }
+        weights_to_write_string = weights_to_write_string[:-1]
+        weights_to_write_string = "{" + weights_to_write_string + "}"
+
+        # append to the collection of weights
+        weights_to_write.append(weights_to_write_string)
+
+    final_string = "{"
+    for weight_string in weights_to_write:
+        final_string = final_string + weight_string + ","
+
+    # remove trailing ','
+    final_string = final_string[:-1]
+    final_string = final_string + "}"
+
+    with open(filepath, 'w') as f:
+        f.write(final_string)
+
+
+def save_2d_weight_to_dat_file(np_array, filepath):
+    """
+    Takes in an np_array and filepath, convert the NP array into string and
+    writes to the file
+    """
+    weights_to_write = []
+    for i in range(len(np_array)):
+        weights_to_write_string = ""
+        for j in range(len(np_array[i])):
+            weights_to_write_string += str(np_array[i][j])
+            weights_to_write_string += ","
+        # replace trailing comma with }
+        weights_to_write_string = weights_to_write_string[:-1]
+
+        # append to the collection of weights
+        weights_to_write.append(weights_to_write_string)
+        
+    with open(filepath, 'w') as f:
+        for weight_string in weights_to_write:
+            weight_string = weight_string + "\n" 
+            f.write(weight_string)
+
+
+def save_1d_weight_to_txt_file(np_array, filepath):
+    """
+    Takes in an np_array and filepath, convert the NP array into string and
+    writes to the file
+    """
+    weights_to_write_string = ""
+    for i in range(len(np_array)):
+        weights_to_write_string += str(np_array[i])
+        weights_to_write_string += ","
+            
+    # replace trailing comma with }
+    weights_to_write_string = weights_to_write_string[:-1]
+    final_string = "{" + weights_to_write_string + "}"
+
+    with open(filepath, 'w') as f:
+        f.write(final_string)
+
+
+def save_1d_weight_to_dat_file(np_array, filepath):
+    """
+    Takes in an np_array and filepath, convert the NP array into string and
+    writes to the file
+    """        
+    with open(filepath, 'w') as f:
+        for i in range(len(np_array)):
+            weight_string = str(np_array[i]) + "\n"
+            f.write(weight_string) 
