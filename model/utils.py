@@ -1,5 +1,8 @@
 from scipy import stats
 import numpy as np
+import tensorflow as tf
+
+QUANT_FACTOR = 1024
 
 def create_segments_and_labels(df, time_steps, step, label_name):
     # x, y, z acceleration as features
@@ -25,7 +28,7 @@ def create_segments_and_labels(df, time_steps, step, label_name):
     return reshaped_segments, labels
 
 
-def save_2d_weight_to_txt_file(np_array, filepath):
+def save_2d_weight_to_txt_file(np_array, filepath, quant=True):
     """
     Takes in an np_array and filepath, convert the NP array into string and
     writes to the file
@@ -34,7 +37,12 @@ def save_2d_weight_to_txt_file(np_array, filepath):
     for i in range(len(np_array)):
         weights_to_write_string = ""
         for j in range(len(np_array[i])):
-            weights_to_write_string += str(np_array[i][j])
+            if quant:
+                quant_val = np_array[i][j] * QUANT_FACTOR
+                quant_val_int = int(quant_val)
+                weights_to_write_string += str(quant_val_int)
+            else:
+                weights_to_write_string += str(np_array[i][j])
             weights_to_write_string += ","
         # replace trailing comma with }
         weights_to_write_string = weights_to_write_string[:-1]
@@ -55,7 +63,7 @@ def save_2d_weight_to_txt_file(np_array, filepath):
         f.write(final_string)
 
 
-def save_2d_weight_to_dat_file(np_array, filepath):
+def save_2d_weight_to_dat_file(np_array, filepath, quant=True):
     """
     Takes in an np_array and filepath, convert the NP array into string and
     writes to the file
@@ -64,7 +72,14 @@ def save_2d_weight_to_dat_file(np_array, filepath):
     for i in range(len(np_array)):
         weights_to_write_string = ""
         for j in range(len(np_array[i])):
-            weights_to_write_string += str(np_array[i][j])
+            if quant:
+                # try quantization
+                quant_val = np_array[i][j] * QUANT_FACTOR
+                quant_val_int = int(quant_val)
+                weights_to_write_string += str(quant_val_int)
+            else:
+                weights_to_write_string += str(np_array[i][j])
+
             weights_to_write_string += ","
         # replace trailing comma with }
         weights_to_write_string = weights_to_write_string[:-1]
@@ -78,14 +93,20 @@ def save_2d_weight_to_dat_file(np_array, filepath):
             f.write(weight_string)
 
 
-def save_1d_weight_to_txt_file(np_array, filepath):
+def save_1d_weight_to_txt_file(np_array, filepath, quant=True):
     """
     Takes in an np_array and filepath, convert the NP array into string and
     writes to the file
     """
     weights_to_write_string = ""
     for i in range(len(np_array)):
-        weights_to_write_string += str(np_array[i])
+        if quant:
+            quant_val = np_array[i] * QUANT_FACTOR
+            quant_val_int = int(quant_val)
+            weights_to_write_string += str(quant_val_int)
+        else:
+            weights_to_write_string += str(np_array[i])
+        
         weights_to_write_string += ","
             
     # replace trailing comma with }
@@ -96,12 +117,24 @@ def save_1d_weight_to_txt_file(np_array, filepath):
         f.write(final_string)
 
 
-def save_1d_weight_to_dat_file(np_array, filepath):
+def save_1d_weight_to_dat_file(np_array, filepath, quant=True):
     """
     Takes in an np_array and filepath, convert the NP array into string and
     writes to the file
     """        
     with open(filepath, 'w') as f:
         for i in range(len(np_array)):
-            weight_string = str(np_array[i]) + "\n"
-            f.write(weight_string) 
+            weight_string = ""
+            if quant:
+                quant_val = np_array[i] * QUANT_FACTOR
+                quant_val_int = int(quant_val)
+                weight_string = str(quant_val_int)
+            else:
+                weight_string = str(np_array[i]) + "\n"
+            f.write(weight_string)
+
+
+def getMask(x):
+    boolMask = tf.not_equal(x, 0)
+    floatMask = tf.cast(boolMask, tf.float32)
+    return floatMask

@@ -15,6 +15,9 @@ trainer.normalize_test()
 trainer.model = model
 trainer.visualize_testing_result()
 
+# print(len(model.trainable_variables))
+print(model.summary())
+
 ## Save weights into C++ Arrays for Copy Pasting
 ## Layer 1
 layer1_weights_object = model.trainable_variables[0]

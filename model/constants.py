@@ -17,4 +17,4 @@ LABEL = 'ActivityEncoded'
 
 # Training Hyper Param
 BATCH_SIZE = 400
-EPOCHS = 50
+EPOCHS = 100
