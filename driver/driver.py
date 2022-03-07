@@ -21,7 +21,7 @@ class Driver:
     
     def predict(self, x):
         #quantise input
-        x = (x * 1024).astype(np.int32)
+        # x = (x * 1024).astype(np.int32)
 
         print("Initialise input buffer")
         self.input_buffer[:] = x
