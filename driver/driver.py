@@ -32,7 +32,8 @@ class Driver:
         self.dma.sendchannel.wait()
         self.dma.recvchannel.wait()
         print("Return result")
-        return np.argmax(self.output_buffer, axis=0)
+        return self.output_buffer
+        # return np.argmax(self.output_buffer, axis=0)
     
     def benchMark(self, x):
         print("Bench marking")
@@ -73,12 +74,13 @@ def benchMarkAccuracy():
     for i in range(0, len(test_data)):
         # create a new driver
         driver = Driver()
-        result = driver.predict(test_data[i])
+        buffer = driver.predict(test_data[i])
+        result = np.argmax(buffer, axis=0)
         if (result == label_list[i]):
-            print("Correct prediction", result, label_list[i])
+            print("Correct prediction", buffer, result, label_list[i])
             correct += 1
         else:
-            print("Incorrect prediction", result, label_list[i])
+            print("Incorrect prediction", buffer, result, label_list[i])
         time.sleep(1.5)
     
 benchMarkAccuracy()
