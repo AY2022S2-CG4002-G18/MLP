@@ -10,7 +10,7 @@ test_label_one_hot = np.loadtxt('./driver_content/test_label_one_hot.txt')
 test_label_one_hot = np.loadtxt('./driver_content/test_label.txt')
 print("Test data loaded")
 
-BIT_PATH = "./driver_content/mlp_2/mlp.bit"
+BIT_PATH = "./driver_content/MLP2/mlp.bit"
 
 def predict_once():
     x = test_data[0]
