@@ -34,15 +34,17 @@ def save_2d_weight_to_txt_file(np_array, filepath, quant=True):
     writes to the file
     """
     weights_to_write = []
-    for i in range(len(np_array)):
+    transposed = np_array.transpose()
+    print(transposed.shape)
+    for i in range(len(transposed)):
         weights_to_write_string = ""
-        for j in range(len(np_array[i])):
+        for j in range(len(transposed[i])):
             if quant:
-                quant_val = np_array[i][j] * QUANT_FACTOR
+                quant_val = transposed[i][j] * QUANT_FACTOR
                 quant_val_int = int(quant_val)
                 weights_to_write_string += str(quant_val_int)
             else:
-                weights_to_write_string += str(np_array[i][j])
+                weights_to_write_string += str(transposed[i][j])
             weights_to_write_string += ","
         # replace trailing comma with }
         weights_to_write_string = weights_to_write_string[:-1]
@@ -69,16 +71,17 @@ def save_2d_weight_to_dat_file(np_array, filepath, quant=True):
     writes to the file
     """
     weights_to_write = []
-    for i in range(len(np_array)):
+    transposed = np_array.transpose()
+    for i in range(len(transposed)):
         weights_to_write_string = ""
-        for j in range(len(np_array[i])):
+        for j in range(len(transposed[i])):
             if quant:
                 # try quantization
-                quant_val = np_array[i][j] * QUANT_FACTOR
+                quant_val = transposed[i][j] * QUANT_FACTOR
                 quant_val_int = int(quant_val)
                 weights_to_write_string += str(quant_val_int)
             else:
-                weights_to_write_string += str(np_array[i][j])
+                weights_to_write_string += str(transposed[i][j])
 
             weights_to_write_string += ","
         # replace trailing comma with }
