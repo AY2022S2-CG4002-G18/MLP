@@ -53,4 +53,5 @@ def measure_time(x):
             return time.time() - start
 
 driver = Driver()
-driver.predict(test_data[0])
+result = driver.predict(test_data[0])
+print(result)
