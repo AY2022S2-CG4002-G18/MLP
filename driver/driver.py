@@ -22,6 +22,7 @@ class Driver:
     def predict(self, x):
         #quantise input
         x = (x * 1024).astype(np.int32)
+
         print("Initialise input buffer")
         self.input_buffer[:] = x
         print("Send data to DMA")
@@ -64,8 +65,22 @@ def measure_time(x):
             dma.recvchannel.wait()
             return time.time() - start
 
-driver = Driver()
-# result = driver.predict(test_data[0])
-# print(result)
 
-driver.test(test_data, test_label)
+def benchMarkAccuracy():
+    label_list = list(test_label)
+    correct = 0
+    total = len(test_label)
+    for i in range(0, len(test_data)):
+        # create a new driver
+        driver = Driver()
+        result = driver.predict(test_data[0])
+        if (result == test_label[i]):
+            print("Correct prediction")
+            correct += 1
+        else:
+            print("Incorrect prediction")
+        time.sleep(1.5)
+    
+benchMarkAccuracy()
+    
+
