@@ -7,7 +7,7 @@ import time
 print("Running PYNQ Driver")
 test_data = np.loadtxt('./driver_content/test_data/test_data.txt')
 test_label_one_hot = np.loadtxt('./driver_content/test_data/test_label_one_hot.txt')
-test_label_one_hot = np.loadtxt('./driver_content/test_data/test_label.txt')
+test_label = np.loadtxt('./driver_content/test_data/test_label.txt', dtype=np.int8)
 print("Test data loaded")
 
 BIT_PATH = "./driver_content/MLP2/mlp.bit"
@@ -34,6 +34,17 @@ class Driver:
     
     def benchMark(self, x):
         print("Bench marking")
+    
+    def test(self, data, data_label):
+        label_list = list(data_label)
+        correct = 0
+        total = len(data_label)
+        for i in range(0,len(data)):
+            result = self.predict(data[i])
+            if result == label_list[i]:
+                correct += 1
+        return correct,total
+
 
 
 def measure_time(x):
@@ -53,5 +64,7 @@ def measure_time(x):
             return time.time() - start
 
 driver = Driver()
-result = driver.predict(test_data[0])
-print(result)
+# result = driver.predict(test_data[0])
+# print(result)
+
+driver.test(test_data, test_label)
