@@ -60,10 +60,10 @@ def measure_time(x):
         input_buffer[:] = x
         with allocate(shape=(16,), dtype=np.int32) as output_buffer:
             start = time.time()
-            dma.sendchannel.transfer(input_buffer)
+            dma.sendchannel.transfer(input_buffer) # Transfer the input_buffer to send DMA
             dma.recvchannel.transfer(output_buffer)
             dma.sendchannel.wait()
-            dma.recvchannel.wait()
+            dma.recvchannel.wait() # Ensures the dMA transactions have completed
             return time.time() - start
 
 
