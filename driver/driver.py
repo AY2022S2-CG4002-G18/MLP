@@ -12,23 +12,29 @@ print("Test data loaded")
 
 BIT_PATH = "./driver_content/MLP2/mlp.bit"
 
-def predict_once():
-    x = test_data[0]
-    print(predictor(x))
+class Driver:
+    def __init__(self):
+        self.ol = Overlay(BIT_PATH)
+        self.dma = self.ol.axi_dma_0
+        self.input_buffer = allocate(shape=(240,), dtype=np.int32)
+        self.output_buffer = allocate(shape=(6,), dtype=np.int32)
+    
+    def predict(self, x):
+        #quantise input
+        x = (x * 1024).astype(np.int32)
+        print("Initialise input buffer")
+        self.input_buffer[:] = x
+        print("Send data to DMA")
+        self.dma.sendchannel.transfer(self.input_buffer)
+        self.dma.recvchannel.transfer(self.output_buffer)
+        print("Waiting...")
+        self.dma.sendchannel.wait()
+        self.dma.recvchannel.wait()
+        return np.argmax(self.output_buffer, axis=0)
+    
+    def benchMark(self, x):
+        print("Bench marking")
 
-def predictor(x):
-    x = (x * 1024).astype(np.int32)
-    # load overlay
-    ol = Overlay(BIT_PATH)
-    dma = ol.axi_dma_0
-    with allocate(shape=(x.shape), dtype=np.int32) as input_buffer:
-        input_buffer[:] = x
-        with allocate(shape=(16,), dtype=np.int32) as output_buffer:
-            dma.sendchannel.transfer(input_buffer)
-            dma.recvchannel.transfer(output_buffer)
-            dma.sendchannel.wait()
-            dma.recvchannel.wait()
-            return np.argmax(output_buffer[0:5], axis=0)
 
 def measure_time(x):
     # quantise input
@@ -46,4 +52,5 @@ def measure_time(x):
             dma.recvchannel.wait()
             return time.time() - start
 
-predict_once()
+driver = Driver()
+driver.predict(test_data[0])
