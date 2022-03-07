@@ -7,7 +7,7 @@
 #define HIDDEN1_SIZE 128
 #define HIDDEN2_SIZE 32
 #define OUTPUT_SIZE 6
-#define QUANT_FACTOR 1
+#define QUANT_FACTOR 1024
 
 struct AXIS_wLAST{
 	float data;
@@ -46,7 +46,7 @@ void top(int a[N], int b[N], int &out)
  out = product;
 }
 
-float dot_product(int a[], int b[], int n) {
+float dot_product(int a[], float b[], int n) {
 	float sum = 0;
 	for (int l = 0; l < n; l++) {
 		sum += a[l] * b[l] / QUANT_FACTOR;
@@ -54,7 +54,7 @@ float dot_product(int a[], int b[], int n) {
 	return sum;
 }
 
-void myip_MLP_quant_HLS(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_AXIS){
+void MLP(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_AXIS){
 #pragma HLS INTERFACE ap_ctrl_none port=return
 #pragma HLS INTERFACE axis port=S_AXIS
 #pragma HLS INTERFACE axis port=M_AXIS
