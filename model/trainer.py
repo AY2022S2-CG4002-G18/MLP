@@ -193,3 +193,10 @@ class Trainer:
     def save_weight(self):
         
         print("Saving Weights into a text file for C++!")
+
+    def save_test_df(self):
+        print("Saving test data", self.x_test.shape)
+        
+        np.savetxt('test_data.txt', self.x_test)
+        np.savetxt('test_label.txt', self.y_test)
+        np.savetxt('test_label_one_hot.txt', self.y_test_hot)

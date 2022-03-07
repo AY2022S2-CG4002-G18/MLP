@@ -299,7 +299,7 @@ void myip_MLP_quant_HLS(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>
 
 	//Output layer
 	myip_output_hls: for (i = 0; i < OUTPUT_SIZE; i++) {
-		outputs[i] = dot_product(out[i], layer_two_output, HIDDEN2_SIZE) + output_bias[i];
+		outputs[i] = dot_product(output_weight[i], layer_two_output, HIDDEN2_SIZE) + output_bias[i];
 	}
 
 	//Output to stream
