@@ -55,7 +55,7 @@ def save_2d_weight_to_txt_file(np_array, filepath, quant=True):
 
     final_string = "{"
     for weight_string in weights_to_write:
-        final_string = final_string + weight_string + ","
+        final_string = final_string + weight_string + ",\n"
 
     # remove trailing ','
     final_string = final_string[:-1]
