@@ -44,7 +44,7 @@ void load_file(hls::stream<axis_tlast>& ip_stream, axis_tlast& write_strm, ifstr
 	    	  write_strm.last = 0;
 	    	  ip_stream.write(write_strm);
 	          if (ss.peek() == ',') ss.ignore();
-
+ 
 	          count++;
 	      }
 	  }

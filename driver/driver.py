@@ -73,12 +73,12 @@ def benchMarkAccuracy():
     for i in range(0, len(test_data)):
         # create a new driver
         driver = Driver()
-        result = driver.predict(test_data[0])
-        if (result == test_label[i]):
-            print("Correct prediction")
+        result = driver.predict(test_data[i])
+        if (result == label_list[i]):
+            print("Correct prediction", result, label_list[i])
             correct += 1
         else:
-            print("Incorrect prediction")
+            print("Incorrect prediction", result, label_list[i])
         time.sleep(1.5)
     
 benchMarkAccuracy()
