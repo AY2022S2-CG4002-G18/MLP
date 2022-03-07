@@ -160,7 +160,7 @@ int main()
 
   //Call the hardware function
   cout << "Executing function.." << endl;
-  cnn(ip_stream, op_stream);
+  MLP(ip_stream, op_stream);
 
 
   //Run a software version of the hardware function to validate results
