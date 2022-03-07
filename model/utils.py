@@ -3,6 +3,7 @@ import numpy as np
 import tensorflow as tf
 
 QUANT_FACTOR = 1024
+QUANT = False
 
 def create_segments_and_labels(df, time_steps, step, label_name):
     # x, y, z acceleration as features
@@ -28,7 +29,7 @@ def create_segments_and_labels(df, time_steps, step, label_name):
     return reshaped_segments, labels
 
 
-def save_2d_weight_to_txt_file(np_array, filepath, quant=True):
+def save_2d_weight_to_txt_file(np_array, filepath, quant=QUANT):
     """
     Takes in an np_array and filepath, convert the NP array into string and
     writes to the file
@@ -65,7 +66,7 @@ def save_2d_weight_to_txt_file(np_array, filepath, quant=True):
         f.write(final_string)
 
 
-def save_2d_weight_to_dat_file(np_array, filepath, quant=True):
+def save_2d_weight_to_dat_file(np_array, filepath, quant=QUANT):
     """
     Takes in an np_array and filepath, convert the NP array into string and
     writes to the file
@@ -96,7 +97,7 @@ def save_2d_weight_to_dat_file(np_array, filepath, quant=True):
             f.write(weight_string)
 
 
-def save_1d_weight_to_txt_file(np_array, filepath, quant=True):
+def save_1d_weight_to_txt_file(np_array, filepath, quant=QUANT):
     """
     Takes in an np_array and filepath, convert the NP array into string and
     writes to the file
@@ -120,7 +121,7 @@ def save_1d_weight_to_txt_file(np_array, filepath, quant=True):
         f.write(final_string)
 
 
-def save_1d_weight_to_dat_file(np_array, filepath, quant=True):
+def save_1d_weight_to_dat_file(np_array, filepath, quant=QUANT):
     """
     Takes in an np_array and filepath, convert the NP array into string and
     writes to the file
