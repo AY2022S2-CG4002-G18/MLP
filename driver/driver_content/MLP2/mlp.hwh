@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Mar  7 15:35:45 2022" VIVADOVERSION="2019.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Mar  7 15:46:30 2022" VIVADOVERSION="2019.2">
 
   <SYSTEMINFO ARCH="zynquplus" DEVICE="xczu3eg" NAME="MLPBD" PACKAGE="sbva484" SPEEDGRADE="-1"/>
 
@@ -959,7 +959,7 @@
         <PARAMETER NAME="C_M_AXI_MM2S_ADDR_WIDTH" VALUE="32"/>
         <PARAMETER NAME="C_M_AXI_MM2S_DATA_WIDTH" VALUE="32"/>
         <PARAMETER NAME="C_M_AXIS_MM2S_TDATA_WIDTH" VALUE="32"/>
-        <PARAMETER NAME="C_INCLUDE_MM2S_DRE" VALUE="0"/>
+        <PARAMETER NAME="C_INCLUDE_MM2S_DRE" VALUE="1"/>
         <PARAMETER NAME="C_INCLUDE_S2MM" VALUE="1"/>
         <PARAMETER NAME="C_INCLUDE_S2MM_SF" VALUE="1"/>
         <PARAMETER NAME="C_S2MM_BURST_SIZE" VALUE="16"/>
@@ -982,7 +982,7 @@
         <PARAMETER NAME="c_include_mm2s" VALUE="1"/>
         <PARAMETER NAME="c_m_axi_mm2s_data_width" VALUE="32"/>
         <PARAMETER NAME="c_m_axis_mm2s_tdata_width" VALUE="32"/>
-        <PARAMETER NAME="c_include_mm2s_dre" VALUE="0"/>
+        <PARAMETER NAME="c_include_mm2s_dre" VALUE="1"/>
         <PARAMETER NAME="c_include_mm2s_sf" VALUE="1"/>
         <PARAMETER NAME="c_mm2s_burst_size" VALUE="16"/>
         <PARAMETER NAME="c_include_s2mm" VALUE="1"/>
