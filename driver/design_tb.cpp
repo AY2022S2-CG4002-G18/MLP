@@ -9,10 +9,6 @@
 #include "hls_stream.h"
 #include "ap_axi_sdata.h"
 
-
-#include "header/definitions.h"
-
-typedef ap_uint<INDEX_WIDTH> ind_t;
 typedef int nn_t;
 
 struct axis_tlast {
@@ -39,7 +35,7 @@ void load_file(hls::stream<axis_tlast>& ip_stream, axis_tlast& write_strm, ifstr
 
 	      while (ss >> val) {
 	    	  write_strm.data = val;
-	    	  cout << "val " << val << ", strm " << write_strm.data << endl;
+	    	  //cout << "val " << val << ", strm " << write_strm.data << endl;
 	    	  //cout << val << endl;
 	    	  write_strm.last = 0;
 	    	  ip_stream.write(write_strm);
@@ -54,7 +50,7 @@ void load_file(hls::stream<axis_tlast>& ip_stream, axis_tlast& write_strm, ifstr
 
 
 //Test function declaration
-void cnn(hls::stream<axis_tlast>& ip_stream,
+void MLP(hls::stream<axis_tlast>& ip_stream,
 		hls::stream<axis_tlast>& op_stream);
     
 //string WEIGHTS_DIR = "quantized_wb_512\\";

@@ -7,7 +7,7 @@
 #define HIDDEN1_SIZE 128
 #define HIDDEN2_SIZE 32
 #define OUTPUT_SIZE 6
-#define QUANT_FACTOR 1024
+#define QUANT_FACTOR 1
 
 struct AXIS_wLAST{
 	float data;

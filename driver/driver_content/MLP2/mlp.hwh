@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Mar  7 15:46:30 2022" VIVADOVERSION="2019.2">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Mar  7 16:34:33 2022" VIVADOVERSION="2019.2">
 
   <SYSTEMINFO ARCH="zynquplus" DEVICE="xczu3eg" NAME="MLPBD" PACKAGE="sbva484" SPEEDGRADE="-1"/>
 
@@ -8,7 +8,7 @@
   <EXTERNALINTERFACES/>
 
   <MODULES>
-    <MODULE COREREVISION="2103071508" FULLNAME="/MLP_0" HWVERSION="1.0" INSTANCE="MLP_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="MLP" VLNV="xilinx.com:hls:MLP:1.0">
+    <MODULE COREREVISION="2103071632" FULLNAME="/MLP_0" HWVERSION="1.0" INSTANCE="MLP_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="MLP" VLNV="xilinx.com:hls:MLP:1.0">
       <DOCUMENTS/>
       <PARAMETERS>
         <PARAMETER NAME="Component_Name" VALUE="MLPBD_MLP_0_1"/>
@@ -3285,8 +3285,8 @@
             <CONNECTION INSTANCE="axi_dma_0" PORT="axi_resetn"/>
             <CONNECTION INSTANCE="ps8_0_axi_periph" PORT="M00_ARESETN"/>
             <CONNECTION INSTANCE="ps8_0_axi_periph" PORT="ARESETN"/>
-            <CONNECTION INSTANCE="MLP_0" PORT="ap_rst_n"/>
             <CONNECTION INSTANCE="axi_smc" PORT="aresetn"/>
+            <CONNECTION INSTANCE="MLP_0" PORT="ap_rst_n"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -5412,12 +5412,12 @@
             <CONNECTION INSTANCE="axi_dma_0" PORT="s_axi_lite_aclk"/>
             <CONNECTION INSTANCE="ps8_0_axi_periph" PORT="M00_ACLK"/>
             <CONNECTION INSTANCE="ps8_0_axi_periph" PORT="ACLK"/>
-            <CONNECTION INSTANCE="MLP_0" PORT="ap_clk"/>
             <CONNECTION INSTANCE="axi_dma_0" PORT="m_axi_mm2s_aclk"/>
             <CONNECTION INSTANCE="axi_dma_0" PORT="m_axi_s2mm_aclk"/>
             <CONNECTION INSTANCE="axi_dma_0" PORT="m_axi_sg_aclk"/>
             <CONNECTION INSTANCE="axi_smc" PORT="aclk"/>
             <CONNECTION INSTANCE="zynq_ultra_ps_e_0" PORT="saxihp0_fpd_aclk"/>
+            <CONNECTION INSTANCE="MLP_0" PORT="ap_clk"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
