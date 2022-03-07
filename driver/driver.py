@@ -30,6 +30,7 @@ class Driver:
         print("Waiting...")
         self.dma.sendchannel.wait()
         self.dma.recvchannel.wait()
+        print("Return result")
         return np.argmax(self.output_buffer, axis=0)
     
     def benchMark(self, x):
