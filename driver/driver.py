@@ -16,8 +16,6 @@ def predict_once():
     x = test_data[0]
     print(predictor(x))
 
-predict_once()
-
 def predictor(x):
     x = (x * 1024).astype(np.int32)
     # load overlay
@@ -47,3 +45,5 @@ def measure_time(x):
             dma.sendchannel.wait()
             dma.recvchannel.wait()
             return time.time() - start
+
+predict_once()
