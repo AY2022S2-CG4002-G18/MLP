@@ -5,9 +5,9 @@ from pynq import Overlay
 import time
 
 print("Running PYNQ Driver")
-test_data = np.loadtxt('./driver_content/test_data.txt')
-test_label_one_hot = np.loadtxt('./driver_content/test_label_one_hot.txt')
-test_label_one_hot = np.loadtxt('./driver_content/test_label.txt')
+test_data = np.loadtxt('./driver_content/test_data/test_data.txt')
+test_label_one_hot = np.loadtxt('./driver_content/test_data/test_label_one_hot.txt')
+test_label_one_hot = np.loadtxt('./driver_content/test_data/test_label.txt')
 print("Test data loaded")
 
 BIT_PATH = "./driver_content/MLP2/mlp.bit"
