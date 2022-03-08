@@ -32,10 +32,26 @@ void softmax(int a[]) {
 	return;
 }
 
-void myip_MLP_quant_HLS(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_AXIS){
-#pragma HLS INTERFACE ap_ctrl_none port=return
-#pragma HLS INTERFACE axis port=S_AXIS
-#pragma HLS INTERFACE axis port=M_AXIS
+void myIP(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_AXIS){
+	#pragma HLS INTERFACE ap_ctrl_none port=return
+	#pragma HLS INTERFACE axis port=S_AXIS
+	#pragma HLS INTERFACE axis port=M_AXIS
+
+	for (i = 0; i < INPUT_SIZE; i++) {
+		read_input = S_AXIS.read();
+		inputs[i] = read_input.data;
+	}
+
+	//Output to stream
+	for (i = 0; i < OUTPUT_SIZE; i++) {
+		write_output.data = outputs[i];
+		write_output.last = 0;
+		if (i == OUTPUT_SIZE - 1) {
+			write_output.last = 1;
+		}
+		M_AXIS.write(write_output);
+	}
+}	
 
 	int inputs[INPUT_SIZE] = {};
 
