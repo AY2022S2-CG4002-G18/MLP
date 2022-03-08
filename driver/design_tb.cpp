@@ -95,7 +95,6 @@ int main() {
 			std::cout << " [incorrect]" << std::endl;
 		}
 		std::cout << std::endl;
-		break;
 	}
 
 	std::cout << "Correct/Total - " << correct << "/" << total << std::endl;
