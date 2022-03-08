@@ -99,5 +99,6 @@ def benchMark():
         else:
             print("Incorrect prediction", buffer, result, label_list[i])
     
-    print(f"Accuracy {}" correct/total)
+    print(f"Accuracy {}", correct/total)
     
+benchMark()
