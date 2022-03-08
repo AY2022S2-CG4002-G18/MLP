@@ -12,6 +12,10 @@ print("Test data loaded")
 
 BIT_PATH = "./driver_content/MLP1/design_2.bit"
 
+test_input_90 = test_data[0]
+test_input_90 = test_input_90[0:90]
+
+
 class Driver:
     def __init__(self):
         self._initialise()
@@ -60,13 +64,15 @@ class Driver:
 
 def predict_once():
     ol = Overlay(BIT_PATH)
-    # x = x.astype(np.int32)
+    x = test_input_90.astype(np.int32)
+    
     dma = ol.axi_dma_0
     input_buffer = allocate(shape=(90,), dtype=np.int32)
     output_buffer = allocate(shape=(16,), dtype=np.int32)
-
+    input_buffer[:] = x
+    print(input_buffer)
     print("Sent buffer")
-    
+
     dma.sendchannel.transfer(input_buffer)
     dma.recvchannel.transfer(output_buffer)
 
