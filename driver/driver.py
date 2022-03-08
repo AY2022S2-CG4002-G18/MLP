@@ -70,7 +70,7 @@ def predict_once():
     input_buffer = allocate(shape=(240,), dtype=np.float32)
     output_buffer = allocate(shape=(6,), dtype=np.float32)
     input_buffer[:] = x
-    print(input_buffer)
+    # print(input_buffer)
     print("Sent buffer")
 
     dma.sendchannel.transfer(input_buffer)
