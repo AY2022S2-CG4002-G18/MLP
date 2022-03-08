@@ -12,8 +12,11 @@ print("Test data loaded")
 
 BIT_PATH = "./driver_content/MLP2/mlp.bit"
 
-class Driver:    
-    def initialise(self):
+class Driver:
+    def __init__(self):
+        self._initialise()
+
+    def _initialise(self):
         print("Initiating dirver")
         self.ol = Overlay(BIT_PATH)
         self.hls_ip = self.ol.Hls_accel_0
@@ -82,7 +85,6 @@ def benchMarkAccuracy():
     for i in range(0, len(test_data)):
         # create a new driver
         driver = Driver()
-        driver.initialise()
         buffer = driver.predict(test_data[i])
         result = np.argmax(buffer, axis=0)
         if (result == label_list[i]):
