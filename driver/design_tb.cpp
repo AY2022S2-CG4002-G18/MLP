@@ -80,7 +80,7 @@ int main() {
 				max = output[i];
 			}
 		}
-//		std::cout << "Softmax Array:" << output[0] << "," << output[1] << "," << output[2] << "," <<  output[3] << "," << output[4] << "," << output[5] << std::endl;
+		std::cout << "Softmax Array:" << output[0] << "," << output[1] << "," << output[2] << "," <<  output[3] << "," << output[4] << "," << output[5] << std::endl;
 
 
 		// read output and compare
@@ -95,6 +95,7 @@ int main() {
 			std::cout << " [incorrect]" << std::endl;
 		}
 		std::cout << std::endl;
+		break;
 	}
 
 	std::cout << "Correct/Total - " << correct << "/" << total << std::endl;

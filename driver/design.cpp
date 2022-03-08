@@ -80,8 +80,9 @@ void softmax(float* input, size_t size) {
 
 }
 
-void one_hot_encoding(float* input, size_t size) {
+int* one_hot_encoding(float* input, size_t size) {
 	assert(0 <= size <= sizeof(input) / sizeof(float));
+	int result[size];
 	float max = -INFINITY;
 	int index = 0;
 
@@ -94,11 +95,12 @@ void one_hot_encoding(float* input, size_t size) {
 
 	for (int i = 0; i < size; i ++){
 		if (i == index) {
-			input[i] = 1;
+			result[i] = 1;
 		} else {
-			input[i] = 0;
+			result[i] = 0;
 		}
 	}
+	return result;
 }
 
 void MLP(hls::stream<AXIS_wLAST>& input_stream, hls::stream<AXIS_wLAST>& output_stream){
@@ -313,7 +315,6 @@ void MLP(hls::stream<AXIS_wLAST>& input_stream, hls::stream<AXIS_wLAST>& output_
 		outputs[i] = dot_product(output_weight[i], layer_two_output, HIDDEN2_SIZE) + output_bias[i];
 	}
 	softmax(outputs, 6);
-//	one_hot_encoding(outputs, 6);
 
 	//Output to stream
 	for (i = 0; i < OUTPUT_SIZE; i++) {
