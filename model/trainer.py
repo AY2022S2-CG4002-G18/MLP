@@ -186,9 +186,19 @@ class Trainer:
 
     def visualize_testing_result(self):
         score = self.model.evaluate(self.x_test, self.y_test_hot, verbose=1)
+        
+        y_pred = self.model.predict(self.x_test)
+
+        print(y_pred.argmax(axis=1))
+        y_test_int = self.y_test.astype(int)
+
+        matrix = metrics.confusion_matrix(y_test_int, y_pred.argmax(axis=1))
+        print(matrix)
 
         print('\nAccuracy on test data: %0.2f' % score[1])
         print('Loss on test data: %0.2f\n' % score[0])
+
+        print(score)
     
     def save_weight(self):
         
