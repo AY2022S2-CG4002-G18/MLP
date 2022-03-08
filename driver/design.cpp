@@ -22,29 +22,29 @@ float relu(float x) {
 }
 
 #define N 8
-void top(int a[N], int b[N], int &out)
-{
-  int a_int[N],b_int[N];
-#pragma HLS array_partition  variable=a_int dim=1 complete
-#pragma HLS array_partition  variable=b_int dim=1 complete
-  int product = 0;
-
-  for(int i=0;i<N;i++) {
-  #pragma HLS pipeline
-    a_int[i] = a[i];
-  }
-  for(int i=0;i<N;i++) {
-  #pragma HLS pipeline
-    b_int[i] = b[i];
-  }
-
-  for(int i=0;i<N;i++) {
-  #pragma HLS unroll
-    product += a_int[i] * b_int[i];
-  }
-
- out = product;
-}
+//void top(int a[N], int b[N], int &out)
+//{
+//  int a_int[N],b_int[N];
+//#pragma HLS array_partition  variable=a_int dim=1 complete
+//#pragma HLS array_partition  variable=b_int dim=1 complete
+//  int product = 0;
+//
+//  for(int i=0;i<N;i++) {
+//  #pragma HLS pipeline
+//    a_int[i] = a[i];
+//  }
+//  for(int i=0;i<N;i++) {
+//  #pragma HLS pipeline
+//    b_int[i] = b[i];
+//  }
+//
+//  for(int i=0;i<N;i++) {
+//  #pragma HLS unroll
+//    product += a_int[i] * b_int[i];
+//  }
+//
+// out = product;
+//}
 
 float dot_product(float a[], float b[], int n) {
 	float sum = 0;
