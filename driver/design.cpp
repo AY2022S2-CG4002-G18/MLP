@@ -1,4 +1,4 @@
-//#include "ap_axi_sdata.h" // ap_axis can also be used, but it will include all sideband signals which we don't need
+// #include "ap_axi_sdata.h" // ap_axis can also be used, but it will include all sideband signals which we don't need
 #include "hls_stream.h"
 #include "ap_int.h"
 #include "hls_math.h"
@@ -268,9 +268,9 @@ void MLP(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_AXIS){
 
 	//Output to stream
 	for (i = 0; i < OUTPUT_SIZE; i++) {
-		write_output.data = outputs[i];
+		write_output.data = 1.1;
 		write_output.last = 0;
-		if (i == 15) { //build branch predictor here
+		if (i == 5) { //build branch predictor here
 			write_output.last = 1;
 		}
 		M_AXIS.write(write_output);
