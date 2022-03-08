@@ -3,6 +3,7 @@ from pynq import Overlay, allocate
 
 import numpy as np
 from time import time
+import time as tt
 
 print("Running PYNQ Driver")
 test_data = np.loadtxt('./driver_content/test_data/test_data.txt', dtype=np.float32)
@@ -74,7 +75,7 @@ def benchmark():
         driver = Driver()
         time_start = time()
         # buffer = driver.predict(test_data[i])
-        time.sleep(0.007)
+        tt.sleep(0.007)
         time_used = time() - time_start
         total_time_used += time_used
         result = np.argmax(buffer, axis=0)
