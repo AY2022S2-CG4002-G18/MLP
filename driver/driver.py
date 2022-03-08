@@ -20,9 +20,9 @@ class Driver:
         print("Initiating dirver")
         self.ol = Overlay(BIT_PATH)
         # self.hls_ip = self.ol.Hls_accel_0
-        # self.dma = self.ol.axi_dma_0
+        self.dma = self.ol.axi_dma_0
 
-        self.hls_ip.write(0x00,0x01)
+        # self.hls_ip.write(0x00,0x01)
 
         print("Allocated buffer")
         self.input_buffer = allocate(shape=(240,), dtype=np.float32)
