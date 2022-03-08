@@ -22,8 +22,8 @@ class Driver:
         self.dma = self.ol.axi_dma_0
 
         print("Allocated buffer")
-        self.input_buffer = allocate(shape=(240,), dtype=np.float32)
-        self.output_buffer = allocate(shape=(6,), dtype=np.int32)
+        self.input_buffer = allocate(shape=(240,), dtype=np.float)
+        self.output_buffer = allocate(shape=(6,), dtype=np.float)
     
     def predict(self, x):
         #quantise input
