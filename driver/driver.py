@@ -2,7 +2,7 @@ import pynq.lib.dma
 from pynq import Overlay, allocate
 
 import numpy as np
-import time
+from time import time
 
 print("Running PYNQ Driver")
 test_data = np.loadtxt('./driver_content/test_data/test_data.txt', dtype=np.float32)
@@ -82,15 +82,14 @@ def benchMark():
     correct = 0
     total = len(test_label)
     total_time_used = []
-    time_start = time.now()
 
     for i in range(0, len(test_data)):
         # create a new driver
         total += 1
         driver = Driver()
-        time_start = time.now()
+        time_start = time()
         buffer = driver.predict(test_data[i])
-        time_used = time.now() - time_start
+        time_used = time() - time_start
         total_time_used.append(time_used)
         result = np.argmax(buffer, axis=0)
         if (result == label_list[i]):
@@ -100,5 +99,6 @@ def benchMark():
             print("Incorrect prediction", buffer, result, label_list[i])
     
     print(correct/total)
+    print(time_used)
     
 benchMark()
