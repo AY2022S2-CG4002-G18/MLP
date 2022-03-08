@@ -103,10 +103,10 @@ int* one_hot_encoding(float* input, size_t size) {
 	return result;
 }
 
-void MLP(hls::stream<AXIS_wLAST>& input_stream, hls::stream<AXIS_wLAST>& output_stream){
+void MLP2(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_AXIS){
 #pragma HLS INTERFACE ap_ctrl_none port=return
-#pragma HLS INTERFACE axis port=input_stream
-#pragma HLS INTERFACE axis port=output_stream
+#pragma HLS INTERFACE axis port=S_AXIS
+#pragma HLS INTERFACE axis port=M_AXIS
 
 	float inputs[INPUT_SIZE] = {};
 
@@ -294,7 +294,7 @@ void MLP(hls::stream<AXIS_wLAST>& input_stream, hls::stream<AXIS_wLAST>& output_
 	
 	// Read layer
 	myip_read_hls: for (i = 0; i < INPUT_SIZE; i++) {
-		read_input = input_stream.read();
+		read_input = S_AXIS.read();
 		inputs[i] = read_input.data;
 	}
 
@@ -323,6 +323,6 @@ void MLP(hls::stream<AXIS_wLAST>& input_stream, hls::stream<AXIS_wLAST>& output_
 		if (i == OUTPUT_SIZE - 1) { //build branch predictor here
 			write_output.last = 1;
 		}
-		output_stream.write(write_output);
+		M_AXIS.write(write_output);
 	}
 }
