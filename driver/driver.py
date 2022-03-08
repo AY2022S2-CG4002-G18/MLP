@@ -77,7 +77,7 @@ def predict_once():
     dma.recvchannel.transfer(output_buffer)
 
     dma.sendchannel.wait()
-    dma.recvchannel.wait()
+    # dma.recvchannel.wait()
 
     print(output_buffer)
 
