@@ -1,7 +1,7 @@
 import pynq.lib.dma
+from pynq import Overlay, allocate
+
 import numpy as np
-from pynq import allocate
-from pynq import Overlay
 import time
 
 print("Running PYNQ Driver")
@@ -22,9 +22,10 @@ class Driver:
     def predict(self, x):
         #quantise input
         # x = (x * 1024).astype(np.int32)
-
         print("Initialise input buffer")
-        self.input_buffer[:] = x
+        for i in range(len(x)):
+            self.input_buffer[i] = x[i]
+        
         print("Send data to DMA")
         self.dma.sendchannel.transfer(self.input_buffer)
         self.dma.recvchannel.transfer(self.output_buffer)
