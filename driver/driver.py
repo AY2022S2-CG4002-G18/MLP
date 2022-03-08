@@ -10,7 +10,7 @@ test_label_one_hot = np.loadtxt('./driver_content/test_data/test_label_one_hot.t
 test_label = np.loadtxt('./driver_content/test_data/test_label.txt', dtype=np.int8)
 print("Test data loaded")
 
-BIT_PATH = "./driver_content/MLP3/desgin_2.bit"
+BIT_PATH = "./driver_content/MLP3/design_2.bit"
 
 test_input_90 = test_data[0]
 test_input_90 = test_input_90[0:90]
