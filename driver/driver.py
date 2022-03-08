@@ -68,11 +68,11 @@ def benchmark():
     correct = 0
     total = len(test_label)
     total_time_used = 0
-
+    driver = Driver()
     for i in range(0, len(test_data)):
         # create a new driver
         total += 1
-        driver = Driver()
+        
         time_start = time()
         # buffer = driver.predict(test_data[i])
         tt.sleep(0.007)
