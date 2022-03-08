@@ -23,7 +23,7 @@ class Driver:
 
         print("Allocated buffer")
         self.input_buffer = allocate(shape=(240,), dtype=np.float32)
-        self.output_buffer = allocate(shape=(6,), dtype=np.float32)
+        self.output_buffer = allocate(shape=(6,), dtype=np.int8)
     
     def predict(self, x):
         #quantise input
