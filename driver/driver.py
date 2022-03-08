@@ -10,7 +10,7 @@ test_label_one_hot = np.loadtxt('./driver_content/test_data/test_label_one_hot.t
 test_label = np.loadtxt('./driver_content/test_data/test_label.txt', dtype=np.int8)
 print("Test data loaded")
 
-BIT_PATH = "./driver_content/MLP1/design_2.bit"
+BIT_PATH = "./driver_content/MLP2/mlp.bit"
 
 test_input_90 = test_data[0]
 test_input_90 = test_input_90[0:90]
@@ -64,11 +64,11 @@ class Driver:
 
 def predict_once():
     ol = Overlay(BIT_PATH)
-    x = test_input_90.astype(np.int32)
+    x = test_data[0].astype(np.float32)
     
     dma = ol.axi_dma_0
-    input_buffer = allocate(shape=(90,), dtype=np.int32)
-    output_buffer = allocate(shape=(16,), dtype=np.int32)
+    input_buffer = allocate(shape=(240,), dtype=np.float32)
+    output_buffer = allocate(shape=(6,), dtype=np.float32)
     input_buffer[:] = x
     print(input_buffer)
     print("Sent buffer")
