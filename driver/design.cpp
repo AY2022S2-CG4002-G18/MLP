@@ -54,6 +54,53 @@ float dot_product(float a[], float b[], int n) {
 	return sum;
 }
 
+void softmax(float* input, size_t size) {
+
+	assert(0 <= size <= sizeof(input) / sizeof(float));
+
+	int i;
+	double m, sum, constant;
+
+	m = -INFINITY;
+	for (i = 0; i < size; ++i) {
+		if (m < input[i]) {
+			m = input[i];
+		}
+	}
+
+	sum = 0.0;
+	for (i = 0; i < size; ++i) {
+		sum += exp(input[i] - m);
+	}
+
+	constant = m + log(sum);
+	for (i = 0; i < size; ++i) {
+		input[i] = exp(input[i] - constant);
+	}
+
+}
+
+void one_hot_encoding(float* input, size_t size) {
+	assert(0 <= size <= sizeof(input) / sizeof(float));
+	float max = -INFINITY;
+	int index = 0;
+
+	for (int i = 0; i < size; i ++){
+		if(input[i] > max){
+			max = input[i];
+			index = i;
+		}
+	}
+
+	for (int i = 0; i < size; i ++){
+		if (i == index) {
+			input[i] = 1;
+		} else {
+			input[i] = 0;
+		}
+	}
+}
+
 void MLP(hls::stream<AXIS_wLAST>& input_stream, hls::stream<AXIS_wLAST>& output_stream){
 #pragma HLS INTERFACE ap_ctrl_none port=return
 #pragma HLS INTERFACE axis port=input_stream
@@ -265,6 +312,8 @@ void MLP(hls::stream<AXIS_wLAST>& input_stream, hls::stream<AXIS_wLAST>& output_
 	myip_output_hls: for (i = 0; i < OUTPUT_SIZE; i++) {
 		outputs[i] = dot_product(output_weight[i], layer_two_output, HIDDEN2_SIZE) + output_bias[i];
 	}
+	softmax(outputs, 6);
+//	one_hot_encoding(outputs, 6);
 
 	//Output to stream
 	for (i = 0; i < OUTPUT_SIZE; i++) {
