@@ -19,6 +19,7 @@ class Driver:
     def _initialise(self):
         print("Initiating dirver")
         self.ol = Overlay(BIT_PATH)
+        self.ol.reset()
         self.dma = self.ol.axi_dma_0
 
         print("Allocated buffer")
