@@ -14,14 +14,21 @@ BIT_PATH = "./driver_content/MLP2/mlp.bit"
 
 class Driver:
     def __init__(self):
+        self._initialise()
+
+    def _initialise(self):
+        print("Initiating dirver")
         self.ol = Overlay(BIT_PATH)
         self.dma = self.ol.axi_dma_0
-        self.input_buffer = allocate(shape=(240,), dtype=np.float32)
-        self.output_buffer = allocate(shape=(6,), dtype=np.float32)
+
+        print("Allocated buffer")
+        self.input_buffer = allocate(shape=(240,), dtype=np.int32)
+        self.output_buffer = allocate(shape=(6,), dtype=np.int32)
     
     def predict(self, x):
         #quantise input
         # x = (x * 1024).astype(np.int32)
+        x = x.astype(np.int32)
         print("Initialise input buffer")
         for i in range(len(x)):
             self.input_buffer[i] = x[i]
@@ -29,8 +36,9 @@ class Driver:
         print("Send data to DMA")
         self.dma.sendchannel.transfer(self.input_buffer)
         self.dma.recvchannel.transfer(self.output_buffer)
-        print("Waiting...")
+        print("Waiting to send...")
         self.dma.sendchannel.wait()
+        print("Waiting to receive...")
         self.dma.recvchannel.wait()
         print("Return result")
         return self.output_buffer
