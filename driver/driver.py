@@ -1,5 +1,5 @@
 import pynq.lib.dma
-from pynq import Overlay, Xlnk
+from pynq import Overlay, allocate
 
 import numpy as np
 import time
@@ -16,9 +16,8 @@ class Driver:
     def __init__(self):
         self.ol = Overlay(BIT_PATH)
         self.dma = self.ol.axi_dma_0
-        self.xlnk = Xlnk()
-        self.input_buffer = self.xlnk.cma_array(shape=(240,), dtype=np.float32)
-        self.output_buffer = self.xlnk.cma_array(shape=(6,), dtype=np.float32)
+        self.input_buffer = allocate(shape=(240,), dtype=np.float32)
+        self.output_buffer = allocate(shape=(6,), dtype=np.float32)
     
     def predict(self, x):
         #quantise input
