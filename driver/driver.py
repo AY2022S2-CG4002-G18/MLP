@@ -77,23 +77,27 @@ def measure_time(x):
             return time.time() - start
 
 
-def benchMarkAccuracy():
+def benchMark():
     label_list = list(test_label)
     correct = 0
     total = len(test_label)
+    total_time_used = []
+    time_start = time.now()
+
     for i in range(0, len(test_data)):
         # create a new driver
+        total += 1
         driver = Driver()
+        time_start = time.now()
         buffer = driver.predict(test_data[i])
+        time_used = time.now() - time_start
+        total_time_used.append(time_used)
         result = np.argmax(buffer, axis=0)
         if (result == label_list[i]):
             print("Correct prediction", buffer, result, label_list[i])
             correct += 1
         else:
             print("Incorrect prediction", buffer, result, label_list[i])
-        time.sleep(1.5)
     
-benchMarkAccuracy()
-
-# [-1046860800 -1029567616 -1030513536  1106247680  1121402496 -1023837696]
-# [-1130766261 -1113345691 -1114172450  1022469131  1037687952 -1107492374]
+    print(f"Accuracy {}" correct/total)
+    
