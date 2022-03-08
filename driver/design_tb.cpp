@@ -15,7 +15,7 @@ struct AXIS_wLAST{
 };
 
 // top level function declaration
-void MLP(hls::stream<AXIS_wLAST>& input_stream, hls::stream<AXIS_wLAST>& output_stream);
+void MLP2(hls::stream<AXIS_wLAST>& input_stream, hls::stream<AXIS_wLAST>& output_stream);
 
 int main() {
 	std::cout << "start test\n";
@@ -63,7 +63,7 @@ int main() {
 
 		// get output
 
-		MLP(input_stream, output_stream);
+		MLP2(input_stream, output_stream);
 
 		// output size is 6
 		for (int i = 0; i < 6; i ++){

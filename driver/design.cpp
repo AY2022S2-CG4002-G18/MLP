@@ -56,7 +56,7 @@ float dot_product(float a[], float b[], int n) {
 
 void softmax(float* input, size_t size) {
 
-	assert(0 <= size <= sizeof(input) / sizeof(float));
+//	assert(0 <= size <= sizeof(input) / sizeof(float));
 
 	int i;
 	double m, sum, constant;
@@ -80,28 +80,6 @@ void softmax(float* input, size_t size) {
 
 }
 
-int* one_hot_encoding(float* input, size_t size) {
-	assert(0 <= size <= sizeof(input) / sizeof(float));
-	int result[size];
-	float max = -INFINITY;
-	int index = 0;
-
-	for (int i = 0; i < size; i ++){
-		if(input[i] > max){
-			max = input[i];
-			index = i;
-		}
-	}
-
-	for (int i = 0; i < size; i ++){
-		if (i == index) {
-			result[i] = 1;
-		} else {
-			result[i] = 0;
-		}
-	}
-	return result;
-}
 
 void MLP2(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_AXIS){
 #pragma HLS INTERFACE ap_ctrl_none port=return
