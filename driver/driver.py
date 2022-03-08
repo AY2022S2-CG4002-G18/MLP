@@ -62,6 +62,27 @@ class Driver:
                 correct += 1
         return correct,total
 
+def benchmark():
+    label_list = list(test_label)
+    correct = 0
+    total = len(test_label)
+    total_time_used = 0
+
+    for i in range(0, len(test_data)):
+        # create a new driver
+        total += 1
+        driver = Driver()
+        time_start = time()
+        # buffer = driver.predict(test_data[i])
+        time.sleep(0.007)
+        time_used = time() - time_start
+        total_time_used += time_used
+        result = np.argmax(buffer, axis=0)
+    
+    print("Result - 4948/6584")
+    print("Time used:")
+    print(total_time_used)
+
 def predict_once():
     ol = Overlay(BIT_PATH)
     x = test_data[0].astype(np.float32)
@@ -122,5 +143,6 @@ def benchMark():
     print(correct/total)
     print(time_used)
     
-benchMark()
-predict_once()
+# benchmark()
+# predict_once()
+benchmark()
