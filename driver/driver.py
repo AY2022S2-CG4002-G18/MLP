@@ -78,7 +78,7 @@ def benchmark():
         tt.sleep(0.007)
         time_used = time() - time_start
         total_time_used += time_used
-        result = np.argmax(buffer, axis=0)
+        # result = np.argmax(buffer, axis=0)
     
     print("Result - 4948/6584")
     print("Time used:")
