@@ -21,6 +21,8 @@ from constants import LABELS, TIME_PERIODS, STEP_DISTANCE, LABEL, BATCH_SIZE, EP
 from dataset import get_data_frame, show_basic_dataframe_info, visualize_data
 from utils import create_segments_and_labels
 
+from time import time
+
 class Trainer:
     def __init__(self, df):
         self.df = df
@@ -186,7 +188,6 @@ class Trainer:
 
     def visualize_testing_result(self):
         score = self.model.evaluate(self.x_test, self.y_test_hot, verbose=1)
-        
         y_pred = self.model.predict(self.x_test)
 
         print(y_pred.argmax(axis=1))

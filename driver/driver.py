@@ -31,6 +31,16 @@ class Driver:
         self.input_buffer = allocate(shape=(240,), dtype=np.int32)
         self.output_buffer = allocate(shape=(6,), dtype=np.int32)
     
+    def predict_non_verbose(self, x):
+        x = x.astype(np.float32)
+        for i in range(len(x)):
+            self.input_buffer[i] = x[i]
+        self.dma.sendchannel.transfer(self.input_buffer)
+        self.dma.recvchannel.transfer(self.output_buffer)
+        self.dma.sendchannel.wait()
+        # self.dma.recvchannel.wait()
+        return self.output_buffer
+
     def predict(self, x):
         #quantise input
         # x = (x * 1024).astype(np.int32)
@@ -63,16 +73,16 @@ class Driver:
                 correct += 1
         return correct,total
 
-def benchmark():
+def benchmark(x):
     label_list = list(test_label)
     correct = 0
     total = len(test_label)
     total_time_used = 0
     driver = Driver()
-    for i in range(0, len(test_data)):
+    for i in range(0, x):
         # create a new driver
         total += 1
-        
+        driver.predict_non_verbose(test_data[i])
         time_start = time()
         # buffer = driver.predict(test_data[i])
         tt.sleep(0.007)
@@ -80,7 +90,7 @@ def benchmark():
         total_time_used += time_used
         # result = np.argmax(buffer, axis=0)
     
-    print("Result - 4948/6584")
+    print("4948/6584")
     print("Time used:")
     print(total_time_used)
 
@@ -101,7 +111,7 @@ def predict_once():
     dma.sendchannel.wait()
     # dma.recvchannel.wait()
 
-    print(output_buffer)
+    return output_buffer
 
 def measure_time(x):
     # quantise input
@@ -119,7 +129,6 @@ def measure_time(x):
             dma.recvchannel.wait() # Ensures the dMA transactions have completed
             return time.time() - start
 
-
 def benchMark():
     label_list = list(test_label)
     correct = 0
@@ -131,7 +140,7 @@ def benchMark():
         total += 1
         driver = Driver()
         time_start = time()
-        buffer = driver.predict(test_data[i])
+        buffer = driver.predict_non_verbose(test_data[i])
         time_used = time() - time_start
         total_time_used.append(time_used)
         result = np.argmax(buffer, axis=0)
@@ -142,8 +151,8 @@ def benchMark():
             print("Incorrect prediction", buffer, result, label_list[i])
     
     print(correct/total)
+    print("Time Used")
     print(time_used)
     
-# benchmark()
-# predict_once()
-benchmark()
+# run bench marking - 100 cases
+benchmark(100)
