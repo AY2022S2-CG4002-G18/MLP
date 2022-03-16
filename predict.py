@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-from driver.driver import predictor
+# from driver.driver import predictor
 
 
 def convert_to_float(x):
@@ -45,7 +45,7 @@ def main():
     print("Input Shape: " + str(reshaped_segments.shape))
 
     # print out prediction
-    predictor(reshaped_segments)
+    # predictor(reshaped_segments)
 
 # main()
 
