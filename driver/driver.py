@@ -73,6 +73,11 @@ class Driver:
                 correct += 1
         return correct,total
 
+    def predict(self, input_array):
+        print("Model received, array size", len(input_array))
+        print("--- DUMMY PREDICTION ---")
+        return 1
+
 def benchmark(x):
     label_list = list(test_label)
     correct = 0
@@ -155,4 +160,4 @@ def benchMark():
     print(time_used)
     
 # run bench marking - 100 cases
-benchmark(100)
+# benchmark(100)
