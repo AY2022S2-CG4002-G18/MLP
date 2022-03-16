@@ -47,4 +47,10 @@ def main():
     # print out prediction
     predictor(reshaped_segments)
 
-main()
+# main()
+
+def predict(input_array):
+    print("Input array size ", len(input_array))
+    print("--- DUMMY PREDICTION ---")
+    print("RELOAD")
+    return 1
