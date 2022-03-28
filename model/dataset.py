@@ -5,6 +5,10 @@ import numpy as np
 pd.options.display.float_format = '{:.1f}'.format
 plt.style.use('ggplot')
 
+def read_capstone_data(file_path):
+    df = pd.read_csv(file_path, header=None)
+    return df
+
 def read_data(file_path):
     column_names = ['user-id',
                     'activity',

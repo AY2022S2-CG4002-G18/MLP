@@ -24,8 +24,14 @@ from utils import create_segments_and_labels
 from time import time
 
 class Trainer:
-    def __init__(self, df):
-        self.df = df
+    def __init__(self, wisdm_df, capstone_df, capstone_label, capstone_df_test, capstone_label_test):
+        self.df = wisdm_df
+        self.capstone_df = capstone_df
+        self.capstone_label = capstone_label
+
+        self.capstone_df_train = None
+        self.capstone_df_test = capstone_df_test
+
         self.df_test = None
         self.df_train = None
 
@@ -39,6 +45,14 @@ class Trainer:
         self.y_train_hot = None
         self.y_test = None
         self.y_test_hot = None
+
+        self.x_capstone_train = capstone_df
+        self.y_capstone_train = capstone_label
+        self.y_capstone_train_hot = None
+
+        self.x_capstone_test = capstone_df_test
+        self.y_capstone_test = capstone_label_test
+        self.y_capstone_test_hot = None
 
         ## MLP model
         self.model = None
@@ -60,9 +74,12 @@ class Trainer:
         #     layers.Dense(units=6, activation='softmax')
         # ])
         model = Sequential()
-        model.add(Dense(128, input_dim=self.x_train.shape[1], activation='relu'))
+        model.add(Dense(240, input_dim=self.x_capstone_train.shape[1], activation='relu'))
+        model.add(Dense(100, activation='relu'))
         model.add(Dense(32, activation='relu'))
-        model.add(Dense(self.le.classes_.size, activation='softmax'))
+        # WISDM dataset has 6 categories, capstone only 4
+        # model.add(Dense(self.le.classes_.size, activation='softmax'))
+        model.add(Dense(4, activation='softmax'))
         print(model.summary())
         self.model = model
 
@@ -79,6 +96,9 @@ class Trainer:
         self.df_test = self.df[self.df['user-id'] > 28]
         self.df_train = self.df[self.df['user-id'] <= 28]
 
+        # For now capstone data is not split
+        self.capstone_df_train = self.capstone_df
+
     def normalize_train(self):
         # Normalize features for training data set (values between 0 and 1)
         # Surpress warning for next 3 operation
@@ -88,6 +108,7 @@ class Trainer:
         self.df_train['z-axis'] = self.df_train['z-axis'] / self.df_train['z-axis'].max()
         # Round numbers
         self.df_train = self.df_train.round({'x-axis': 4, 'y-axis': 4, 'z-axis': 4})
+        
     
     def normalize_test(self):
         pd.options.mode.chained_assignment = None  # default='warn'
@@ -117,6 +138,7 @@ class Trainer:
         self.y_train = self.y_train.astype('float32')
 
         self.y_train_hot = np_utils.to_categorical(self.y_train, num_classes)
+        self.y_capstone_train_hot = np_utils.to_categorical(self.y_capstone_train, 4)
 
         print('New y_train shape: ', self.y_train_hot.shape)
 
@@ -133,7 +155,11 @@ class Trainer:
         self.x_test = self.x_test.astype('float32')
         self.y_test = self.y_test.astype('float32')
 
+        self.x_capstone_test = self.capstone_df_test.astype('float32')
+        self.y_capstone_test = self.y_capstone_test.astype('float32')
+
         self.y_test_hot = np_utils.to_categorical(self.y_test, self.le.classes_.size)
+        self.y_capstone_test_hot = np_utils.to_categorical(self.y_capstone_test, 4)
         print('New y_test shape: ', self.y_test_hot.shape)
     
     def train(self):
@@ -147,10 +173,17 @@ class Trainer:
         self.model.compile(loss='categorical_crossentropy',
                         optimizer='adam', metrics=['accuracy'])
 
+        # print(self.x_train.shape)
+        # print(self.y_train_hot.shape)
+
+        print(self.x_capstone_train.shape)
+        print(self.y_capstone_train_hot.shape)
+
+        self.x_capstone_train = self.x_capstone_train.astype('float32')
 
         # Enable validation to use ModelCheckpoint and EarlyStopping callbacks.
-        self.training_history  = self.model.fit(self.x_train,
-                            self.y_train_hot,
+        self.training_history  = self.model.fit(self.x_capstone_train,
+                            self.y_capstone_train_hot,
                             batch_size=BATCH_SIZE,
                             epochs=EPOCHS,
                             callbacks=callbacks_list,
@@ -187,14 +220,14 @@ class Trainer:
         plt.show()
 
     def visualize_testing_result(self):
-        score = self.model.evaluate(self.x_test, self.y_test_hot, verbose=1)
-        y_pred = self.model.predict(self.x_test)
+        score = self.model.evaluate(self.x_capstone_test, self.y_capstone_test_hot, verbose=1)
+        y_pred = self.model.predict(self.x_capstone_test)
 
         print(y_pred.argmax(axis=1))
         y_test_int = self.y_test.astype(int)
 
-        matrix = metrics.confusion_matrix(y_test_int, y_pred.argmax(axis=1))
-        print(matrix)
+        # matrix = metrics.confusion_matrix(y_test_int, y_pred.argmax(axis=1))
+        # print(matrix)
 
         print('\nAccuracy on test data: %0.2f' % score[1])
         print('Loss on test data: %0.2f\n' % score[0])

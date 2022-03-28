@@ -1,14 +1,26 @@
 from tensorflow import keras
 
 from trainer import Trainer
-from dataset import get_data_frame
+from dataset import get_data_frame, read_capstone_data
 from utils import save_2d_weight_to_txt_file, save_2d_weight_to_dat_file, save_1d_weight_to_txt_file, save_1d_weight_to_dat_file
 
 from time import time
-model = keras.models.load_model('MLP_Model')
+model = keras.models.load_model('MLP_MODEL')
 
-df = get_data_frame('wisdm_dataset/WISDM_ar_v1.1_raw.txt')
-trainer = Trainer(df)
+wisdm_df = get_data_frame('wisdm_dataset/WISDM_ar_v1.1_raw.txt')
+capstone_df = read_capstone_data('data/data.csv')
+capstone_label = read_capstone_data('data/label.csv')
+
+capstone_df_test = read_capstone_data('data/data_test.csv')
+capstone_label_test = read_capstone_data('data/label_test.csv')
+# print(capstone_df)
+trainer = Trainer(
+    wisdm_df=wisdm_df, 
+    capstone_df=capstone_df, 
+    capstone_label=capstone_label,
+    capstone_df_test=capstone_df_test,
+    capstone_label_test=capstone_label_test
+    )
 trainer.train_test_split()
 trainer.initialise_train()
 trainer.initialise_test()

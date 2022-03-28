@@ -1,7 +1,7 @@
 import pandas as pd
 
 FILENAME = "sw3.txt"
-MAX_ID = 59 # The last data item
+MAX_ID = 70 # The last data item
 TEST_ID_RANGE = [60,70]
 
 class DataConverter:
