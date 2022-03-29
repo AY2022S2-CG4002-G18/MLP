@@ -27,5 +27,5 @@ for i in range(len(data)):
     for i in range(0,len(output_buffer)):
         if output_buffer[i] > max_val:
             max_val = output_buffer[i]
-            out_index = i
+            action_index = i
     print(output_buffer, action_index)
