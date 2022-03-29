@@ -1,7 +1,7 @@
 from pynq import Overlay, allocate
 import numpy as np
 
-ol = Overlay("./mlp.bit")
+ol = Overlay("./mlp0239.bit")
 dma = ol.axi_dma_0
 
 input_buffer = allocate(shape=(276,), dtype=np.float32)
