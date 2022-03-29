@@ -20,4 +20,4 @@ for i in range(len(data)):
     dma.recvchannel.transfer(output_buffer)
     dma.sendchannel.wait()
     dma.recvchannel.wait()
-    output_buffer
+    print(output_buffer)
