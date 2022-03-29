@@ -31,8 +31,8 @@ class Driver:
         self.dma = self.ol.axi_dma_0
 
         print("Allocated buffer")
-        self.input_buffer = allocate(shape=(276,), dtype=np.int32)
-        self.output_buffer = allocate(shape=(4,), dtype=np.int32)
+        self.input_buffer = allocate(shape=(276,), dtype=np.float32)
+        self.output_buffer = allocate(shape=(4,), dtype=np.float32)
     
     def predict_non_verbose(self, x):
         x = x.astype(np.float32)
@@ -41,7 +41,7 @@ class Driver:
         self.dma.sendchannel.transfer(self.input_buffer)
         self.dma.recvchannel.transfer(self.output_buffer)
         self.dma.sendchannel.wait()
-        # self.dma.recvchannel.wait()
+        self.dma.recvchannel.wait()
         return self.output_buffer
 
     def predict(self, x):
