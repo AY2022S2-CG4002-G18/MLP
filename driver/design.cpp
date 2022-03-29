@@ -365,11 +365,7 @@ void MLP2(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_AXIS){
 	myip_output_hls: for (i = 0; i < OUTPUT_SIZE; i++) {
 		outputs[i] = dot_product(output_weight[i], layer_three_output, HIDDEN3_SIZE) + output_bias[i];
 	}
-//	softmax(outputs, 4);
-//	outputs[0] = 1;
-//	outputs[1] = 2;
-//	outputs[2] = 3;
-//	outputs[3] = 4;
+
 	//Output to stream
 	for (i = 0; i < OUTPUT_SIZE; i++) {
 		write_output.data = outputs[i];
