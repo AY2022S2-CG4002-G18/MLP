@@ -55,7 +55,7 @@ class Driver:
         print("Waiting to send...")
         self.dma.sendchannel.wait()
         print("Waiting to receive...")
-        # self.dma.recvchannel.wait()
+        self.dma.recvchannel.wait()
         print("Return result")
         return self.output_buffer
         # return np.argmax(self.output_buffer, axis=0)
@@ -145,7 +145,7 @@ def benchMark():
         total += 1
         driver = Driver()
         time_start = time()
-        buffer = driver.predict_non_verbose(test_data[i])
+        buffer = driver.predict(test_data[i])
         time_used = time() - time_start
         total_time_used.append(time_used)
         result = np.argmax(buffer, axis=0)
@@ -160,4 +160,6 @@ def benchMark():
     print(time_used)
     
 # run bench marking - 100 cases
-# benchmark(100)
+benchmark(100)
+
+
