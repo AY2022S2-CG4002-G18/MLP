@@ -65,7 +65,7 @@ int main() {
 
 		MLP2(input_stream, output_stream);
 
-		// output size is 6
+		// output size is 4
 		for (int i = 0; i < 4; i ++){
 			read_stream = output_stream.read();
 			output[i] = read_stream.data;

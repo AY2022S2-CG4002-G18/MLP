@@ -55,31 +55,31 @@ float dot_product(float a[], float b[], int n) {
 	return sum;
 }
 
-void softmax(float* input, size_t size) {
-
-//	assert(0 <= size <= sizeof(input) / sizeof(float));
-
-	int i;
-	double m, sum, constant;
-
-	m = -INFINITY;
-	for (i = 0; i < size; ++i) {
-		if (m < input[i]) {
-			m = input[i];
-		}
-	}
-
-	sum = 0.0;
-	for (i = 0; i < size; ++i) {
-		sum += exp(input[i] - m);
-	}
-
-	constant = m + log(sum);
-	for (i = 0; i < size; ++i) {
-		input[i] = exp(input[i] - constant);
-	}
-
-}
+//void softmax(float* input, size_t size) {
+//
+////	assert(0 <= size <= sizeof(input) / sizeof(float));
+//
+//	int i;
+//	double m, sum, constant;
+//
+//	m = -INFINITY;
+//	for (i = 0; i < size; ++i) {
+//		if (m < input[i]) {
+//			m = input[i];
+//		}
+//	}
+//
+//	sum = 0.0;
+//	for (i = 0; i < size; ++i) {
+//		sum += exp(input[i] - m);
+//	}
+//
+//	constant = m + log(sum);
+//	for (i = 0; i < size; ++i) {
+//		input[i] = exp(input[i] - constant);
+//	}
+//
+//}
 
 
 void MLP2(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_AXIS){
@@ -365,7 +365,8 @@ void MLP2(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_AXIS){
 	myip_output_hls: for (i = 0; i < OUTPUT_SIZE; i++) {
 		outputs[i] = dot_product(output_weight[i], layer_three_output, HIDDEN3_SIZE) + output_bias[i];
 	}
-	softmax(outputs, 4);
+//	softmax(outputs, 4);
+	outputs = {1,2,3,4};
 
 	//Output to stream
 	for (i = 0; i < OUTPUT_SIZE; i++) {
@@ -374,6 +375,6 @@ void MLP2(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_AXIS){
 		if (i == OUTPUT_SIZE - 1) { //build branch predictor here
 			write_output.last = 1;
 		}
-		M_AXIS.write(write_output);
 	}
+	M_AXIS.write(write_output);
 }
