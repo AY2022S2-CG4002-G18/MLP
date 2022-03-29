@@ -52,11 +52,14 @@ class Driver:
         
         print("Send data to DMA")
         self.dma.sendchannel.transfer(self.input_buffer)
+        
+        print("Waiting on send channel")
         self.dma.sendchannel.wait()
 
-        print("Waiting to send...")
-        print("Waiting to receive...")
+        print("Transfer output buffer")
         self.dma.recvchannel.transfer(self.output_buffer)
+        
+        print("Waiting to receive...")
         self.dma.recvchannel.wait()
         
         print("Return result")
