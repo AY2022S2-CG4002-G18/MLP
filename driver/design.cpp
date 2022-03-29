@@ -366,7 +366,7 @@ void MLP2(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_AXIS){
 		outputs[i] = dot_product(output_weight[i], layer_three_output, HIDDEN3_SIZE) + output_bias[i];
 	}
 //	softmax(outputs, 4);
-	outputs = {1,2,3,4};
+//	outputs = {1,2,3,4};
 
 	//Output to stream
 	for (i = 0; i < OUTPUT_SIZE; i++) {
@@ -375,6 +375,6 @@ void MLP2(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_AXIS){
 		if (i == OUTPUT_SIZE - 1) { //build branch predictor here
 			write_output.last = 1;
 		}
+		M_AXIS.write(write_output);
 	}
-	M_AXIS.write(write_output);
 }
