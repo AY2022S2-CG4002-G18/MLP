@@ -5,6 +5,7 @@ import numpy as np
 from time import time
 import time as tt
 
+# export XILINX_XRT=/usr
 print("Running PYNQ Driver")
 test_data = np.loadtxt('./driver_content/test_data/test_data.txt', dtype=np.float32)
 test_label_one_hot = np.loadtxt('./driver_content/test_data/test_label_one_hot.txt')
@@ -51,11 +52,13 @@ class Driver:
         
         print("Send data to DMA")
         self.dma.sendchannel.transfer(self.input_buffer)
-        self.dma.recvchannel.transfer(self.output_buffer)
         print("Waiting to send...")
         self.dma.sendchannel.wait()
+
+        self.dma.recvchannel.transfer(self.output_buffer)
         print("Waiting to receive...")
         self.dma.recvchannel.wait()
+        
         print("Return result")
         return self.output_buffer
         # return np.argmax(self.output_buffer, axis=0)
@@ -160,6 +163,6 @@ def benchMark():
     print(time_used)
     
 # run bench marking - 100 cases
-benchmark(100)
+benchMark(100)
 
 
