@@ -74,9 +74,9 @@ class Trainer:
         #     layers.Dense(units=6, activation='softmax')
         # ])
         model = Sequential()
-        model.add(Dense(128, input_dim=self.x_capstone_train.shape[1], activation='relu'))
+        model.add(Dense(276, input_dim=self.x_capstone_train.shape[1], activation='relu'))
+        model.add(Dense(128, activation='relu'))
         model.add(Dense(64, activation='relu'))
-        model.add(Dense(32, activation='relu'))
         # WISDM dataset has 6 categories, capstone only 4
         # model.add(Dense(self.le.classes_.size, activation='softmax'))
         model.add(Dense(4, activation='softmax'))
@@ -165,8 +165,8 @@ class Trainer:
     def train(self):
         callbacks_list = [
             keras.callbacks.ModelCheckpoint(
-                filepath='best_model.{epoch:02d}-{val_loss:.2f}.h5',
-                monitor='val_loss', save_best_only=True),
+                filepath='best_model.{epoch:02d}-{val_loss:.2f}',
+                monitor='val_accuracy', save_best_only=True),
             keras.callbacks.EarlyStopping(monitor='acc', patience=1)
         ]
 
