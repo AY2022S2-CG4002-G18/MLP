@@ -163,6 +163,6 @@ def benchMark():
     print(time_used)
     
 # run bench marking - 100 cases
-benchMark(100)
+benchMark()
 
 
