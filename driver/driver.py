@@ -52,19 +52,16 @@ class Driver:
         
         print("Send data to DMA")
         self.dma.sendchannel.transfer(self.input_buffer)
+        self.dma.recvchannel.transfer(self.output_buffer)
+
         print("Waiting to send...")
         self.dma.sendchannel.wait()
-
-        self.dma.recvchannel.transfer(self.output_buffer)
         print("Waiting to receive...")
         self.dma.recvchannel.wait()
         
         print("Return result")
         return self.output_buffer
         # return np.argmax(self.output_buffer, axis=0)
-    
-    def benchMark(self, x):
-        print("Bench marking")
     
     def test(self, data, data_label):
         label_list = list(data_label)
@@ -75,32 +72,6 @@ class Driver:
             if result == label_list[i]:
                 correct += 1
         return correct,total
-
-    def predict(self, input_array):
-        print("Model received, array size", len(input_array))
-        print("--- DUMMY PREDICTION ---")
-        return 1
-
-def benchmark(x):
-    label_list = list(test_label)
-    correct = 0
-    total = len(test_label)
-    total_time_used = 0
-    driver = Driver()
-    for i in range(0, x):
-        # create a new driver
-        total += 1
-        driver.predict_non_verbose(test_data[i])
-        time_start = time()
-        # buffer = driver.predict(test_data[i])
-        tt.sleep(0.007)
-        time_used = time() - time_start
-        total_time_used += time_used
-        # result = np.argmax(buffer, axis=0)
-    
-    print("4948/6584")
-    print("Time used:")
-    print(total_time_used)
 
 def predict_once():
     ol = Overlay(BIT_PATH)
