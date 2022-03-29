@@ -74,8 +74,8 @@ class Trainer:
         #     layers.Dense(units=6, activation='softmax')
         # ])
         model = Sequential()
-        model.add(Dense(240, input_dim=self.x_capstone_train.shape[1], activation='relu'))
-        model.add(Dense(100, activation='relu'))
+        model.add(Dense(128, input_dim=self.x_capstone_train.shape[1], activation='relu'))
+        model.add(Dense(64, activation='relu'))
         model.add(Dense(32, activation='relu'))
         # WISDM dataset has 6 categories, capstone only 4
         # model.add(Dense(self.le.classes_.size, activation='softmax'))

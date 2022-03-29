@@ -1,8 +1,37 @@
 import pandas as pd
+import random
 
 FILENAME = "sw3.txt"
 MAX_ID = 70 # The last data item
 TEST_ID_RANGE = [60,70]
+
+class DataItem:
+    def __init__(self):
+        self.gx = []
+        self.gy = []
+        self.gz = []
+        self.ax = []
+        self.ay = []
+        self.az = []
+    
+    def append_to_dataitem(self, data_array):
+        self.gx.append(data_array[0])
+        self.gy.append(data_array[1])
+        self.gz.append(data_array[2])
+        self.ax.append(data_array[3])
+        self.ay.append(data_array[4])
+        self.az.append(data_array[5])
+    
+    def convert_to_single_array(self):
+        res = []
+        res = self.gx + self.gy + self.gz + self.ax + self.ay + self.az
+        
+        if len(res) < 240:
+            to_pad = 240 - len(res)
+            for i in range(0,to_pad):
+                res.append(0)
+
+        return res
 
 class DataConverter:
     def __init__(self, f):
@@ -144,20 +173,86 @@ class DataConverter:
         f.write(str(label))
         return
 
+    def append_to_datafile_from_single_source(self, source_file, label, target_data_file, target_label_file):
+        data = []
+        labels = []
         
+        with open(source_file, 'r') as f:
+            lines = f.readlines()
+            data_item = DataItem()    
+            for line in lines:
+                if line == str(label) + '\n' or line == str(label):
+                    # end of current data item
+                    res = data_item.convert_to_single_array() # convert into single array
+                    data.append(res)
+                    labels.append(label)
 
+                    # reset data struct
+                    data_item = DataItem()
+                    continue
+
+                str_tokens = line[:-1].split(',') # remove \n
+                tokens = [int(val) for val in str_tokens] # conver to int
+                
+                # initialise data item
+                if len(tokens) == 6:
+                    data_item.append_to_dataitem(tokens)
+        
+        with open(target_data_file, 'a') as f:
+            for row in data:
+                row_str = str(row)[1:-1] + '\n'
+                f.write(row_str)
+
+        with open(target_label_file, 'a') as f:
+            for label in labels:
+                label_str = str(label) + '\n'
+                f.write(label_str)
+        return
+
+    def train_test_split(self, data_file, label_file, x_train, y_train, x_test, y_test, test_percentage):
+        data = []
+        labels = []
+        with open(data_file, 'r') as dataf:
+            data = dataf.readlines()
+        with open(label_file, 'r') as labelf:
+            labels = labelf.readlines()
+        
+        if not len(data) == len(labels):
+            print("Mismatch in data label dimensions")
+            return
+        
+        x_train = open(x_train, 'a')
+        y_train = open(y_train, 'a')
+        x_test = open(x_test, 'a')
+        y_test = open(y_test, 'a')
+
+        for i in range(0,len(data)):
+            if random.uniform(0, 1) < test_percentage:
+                x_test.write(data[i])
+                y_test.write(labels[i])
+            else:
+                x_train.write(data[i])
+                y_train.write(labels[i])
+
+        
 dc = DataConverter(FILENAME)
 # dc.convert_to_datafile()
 
+# dc.append_to_datafile_from_single_source("data0.txt", 0, "data.csv", "label.csv")
+# dc.append_to_datafile_from_single_source("data1.txt", 1, "data.csv", "label.csv")
+# dc.append_to_datafile_from_single_source("data2.txt", 2, "data.csv", "label.csv")
+# dc.append_to_datafile_from_single_source("data3.txt", 3, "data.csv", "label.csv")
+
+dc.train_test_split('data.csv', 'label.csv', 'data_train.csv', 'label_train.csv', 'data_test.csv', 'label_test.csv', 0.15)
 
 # merge to test
-dc.merge_data(TEST_ID_RANGE[0], TEST_ID_RANGE[1], "data_test.csv")
+# dc.merge_data(TEST_ID_RANGE[0], TEST_ID_RANGE[1], "data_test.csv")
 # merge to train
-dc.merge_data(0, MAX_ID, "data.csv")
+# dc.merge_data(0, MAX_ID, "data.csv")
 # merge to test
-dc.merge_label(TEST_ID_RANGE[0], TEST_ID_RANGE[1], "label_test.csv")
+# dc.merge_label(TEST_ID_RANGE[0], TEST_ID_RANGE[1], "label_test.csv")
 # merge to train
-dc.merge_label(0, MAX_ID, "label.csv")
+# dc.merge_label(0, MAX_ID, "label.csv")
 
 # FILE1 = "31.txt"
 # FILE2 = "33.txt"
