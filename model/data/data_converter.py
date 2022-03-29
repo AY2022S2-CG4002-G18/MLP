@@ -4,6 +4,7 @@ import random
 FILENAME = "sw3.txt"
 MAX_ID = 70 # The last data item
 TEST_ID_RANGE = [60,70]
+ROW_LENGTH = 276
 
 class DataItem:
     def __init__(self):
@@ -26,8 +27,8 @@ class DataItem:
         res = []
         res = self.gx + self.gy + self.gz + self.ax + self.ay + self.az
         
-        if len(res) < 240:
-            to_pad = 240 - len(res)
+        if len(res) < 276:
+            to_pad = 276 - len(res)
             for i in range(0,to_pad):
                 res.append(0)
 
@@ -92,14 +93,14 @@ class DataConverter:
             df = pd.read_csv(filename, header=None)
             data_arr = df.to_numpy()[0].tolist()
             
-            if len(data_arr) < 240:
-                # pad until 240
-                to_pad = 240 - len(data_arr)
+            if len(data_arr) < 276:
+                # pad until 276
+                to_pad = 276 - len(data_arr)
                 for i in range(to_pad):
                     data_arr.append(0)
-            elif len(data_arr) > 240:
-                # reduce until 240
-                data_arr = data_arr[:240]
+            elif len(data_arr) > 276:
+                # reduce until 276
+                data_arr = data_arr[:276]
                 
             data_matrix.append(data_arr)
         
@@ -138,29 +139,29 @@ class DataConverter:
         l2 = df_2.to_numpy()[0].tolist()
 
         # get list 1
-        if len(l1) < 240:
-                # pad until 240
-            to_pad = 240 - len(l1)
+        if len(l1) < 276:
+                # pad until 276
+            to_pad = 276 - len(l1)
             for i in range(to_pad):
                 l1.append(0)
-        elif len(l1) > 240:
-            # reduce until 240
-            l1 = l1[:240]
+        elif len(l1) > 276:
+            # reduce until 276
+            l1 = l1[:276]
         
         # get list 2
-        if len(l2) < 240:
-                # pad until 240
-            to_pad = 240 - len(l2)
+        if len(l2) < 276:
+                # pad until 276
+            to_pad = 276 - len(l2)
             for i in range(to_pad):
                 l2.append(0)
-        elif len(l1) > 240:
-            # reduce until 240
-            l2 = l2[:240]
+        elif len(l1) > 276:
+            # reduce until 276
+            l2 = l2[:276]
 
         # generate list 3
         i = 0
         l3 = []
-        while i < 240:
+        while i < 276:
             avg = int((l1[i] + l2[i])/2)
             l3.append(avg)
             i += 1
@@ -192,8 +193,12 @@ class DataConverter:
                     continue
 
                 str_tokens = line[:-1].split(',') # remove \n
-                tokens = [int(val) for val in str_tokens] # conver to int
-                
+
+                try:
+                    tokens = [int(val) for val in str_tokens] # convert to int
+                except ValueError:
+                    print(tokens, str_tokens, line)
+
                 # initialise data item
                 if len(tokens) == 6:
                     data_item.append_to_dataitem(tokens)
@@ -234,6 +239,14 @@ class DataConverter:
                 x_train.write(data[i])
                 y_train.write(labels[i])
 
+    def verify_datafile(self, data_file):
+        with open(data_file) as f:
+            lines = f.readlines()
+            for line in lines:
+                str_tokens = line[:-1].split(',')
+                if not len(str_tokens) == 276:
+                    print(line)
+                    return 
         
 dc = DataConverter(FILENAME)
 # dc.convert_to_datafile()
@@ -243,7 +256,11 @@ dc = DataConverter(FILENAME)
 # dc.append_to_datafile_from_single_source("data2.txt", 2, "data.csv", "label.csv")
 # dc.append_to_datafile_from_single_source("data3.txt", 3, "data.csv", "label.csv")
 
-dc.train_test_split('data.csv', 'label.csv', 'data_train.csv', 'label_train.csv', 'data_test.csv', 'label_test.csv', 0.15)
+# dc.train_test_split('data.csv', 'label.csv', 'data_train.csv', 'label_train.csv', 'data_test.csv', 'label_test.csv', 0.10)
+
+dc.verify_datafile('data_train.csv')
+dc.verify_datafile('data_test.csv')
+
 
 # merge to test
 # dc.merge_data(TEST_ID_RANGE[0], TEST_ID_RANGE[1], "data_test.csv")
@@ -261,6 +278,6 @@ dc.train_test_split('data.csv', 'label.csv', 'data_train.csv', 'label_train.csv'
 
 # df = pd.read_csv("3.txt", header=None)
 # data_arr = df.to_numpy()[0].tolist()
-# data_arr = data_arr[:240]
+# data_arr = data_arr[:276]
 # print(len(data_arr))
 # print(str(data_arr)[1:-1])
