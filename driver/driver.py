@@ -25,7 +25,7 @@ class Driver:
         self._initialise()
 
     def _initialise(self):
-        print("Initiating dirver")
+        print("Initiating driver")
         self.ol = Overlay(BIT_PATH)
         # self.ol.reset()
         self.dma = self.ol.axi_dma_0
@@ -56,8 +56,6 @@ class Driver:
         self.dma.sendchannel.transfer(self.input_buffer)
         print("Transfer output buffer")
         self.dma.recvchannel.transfer(self.output_buffer)
-        
-
         
         print("Waiting on send channel")
         self.dma.sendchannel.wait()
@@ -140,5 +138,3 @@ def benchMark():
 
 # run bench marking - 100 cases
 benchMark()
-
-
