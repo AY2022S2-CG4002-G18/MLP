@@ -5,6 +5,7 @@ import numpy as np
 from time import time
 import time as tt
 
+# export XILINX_XRT=/usr
 print("Running PYNQ Driver")
 test_data = np.loadtxt('./driver_content/test_data/test_data.txt', dtype=np.float32)
 test_label_one_hot = np.loadtxt('./driver_content/test_data/test_label_one_hot.txt')
@@ -16,7 +17,9 @@ BIT_PATH = "./driver_content/MLP2/mlp.bit"
 test_input_90 = test_data[0]
 test_input_90 = test_input_90[0:90]
 
-
+# ol.is_loaded
+# ol.bitfile_name
+# ol.pr_dict
 class Driver:
     def __init__(self):
         self._initialise()
@@ -24,7 +27,7 @@ class Driver:
     def _initialise(self):
         print("Initiating dirver")
         self.ol = Overlay(BIT_PATH)
-        self.ol.reset()
+        # self.ol.reset()
         self.dma = self.ol.axi_dma_0
 
         print("Allocated buffer")
@@ -51,17 +54,19 @@ class Driver:
         
         print("Send data to DMA")
         self.dma.sendchannel.transfer(self.input_buffer)
+        print("Transfer output buffer")
         self.dma.recvchannel.transfer(self.output_buffer)
-        print("Waiting to send...")
+        
+
+        
+        print("Waiting on send channel")
         self.dma.sendchannel.wait()
         print("Waiting to receive...")
-        # self.dma.recvchannel.wait()
+        self.dma.recvchannel.wait()
+        
         print("Return result")
         return self.output_buffer
         # return np.argmax(self.output_buffer, axis=0)
-    
-    def benchMark(self, x):
-        print("Bench marking")
     
     def test(self, data, data_label):
         label_list = list(data_label)
@@ -72,32 +77,6 @@ class Driver:
             if result == label_list[i]:
                 correct += 1
         return correct,total
-
-    def predict(self, input_array):
-        print("Model received, array size", len(input_array))
-        print("--- DUMMY PREDICTION ---")
-        return 1
-
-def benchmark(x):
-    label_list = list(test_label)
-    correct = 0
-    total = len(test_label)
-    total_time_used = 0
-    driver = Driver()
-    for i in range(0, x):
-        # create a new driver
-        total += 1
-        driver.predict_non_verbose(test_data[i])
-        time_start = time()
-        # buffer = driver.predict(test_data[i])
-        tt.sleep(0.007)
-        time_used = time() - time_start
-        total_time_used += time_used
-        # result = np.argmax(buffer, axis=0)
-    
-    print("4948/6584")
-    print("Time used:")
-    print(total_time_used)
 
 def predict_once():
     ol = Overlay(BIT_PATH)
@@ -145,7 +124,7 @@ def benchMark():
         total += 1
         driver = Driver()
         time_start = time()
-        buffer = driver.predict_non_verbose(test_data[i])
+        buffer = driver.predict(test_data[i])
         time_used = time() - time_start
         total_time_used.append(time_used)
         result = np.argmax(buffer, axis=0)
@@ -160,4 +139,6 @@ def benchMark():
     print(time_used)
     
 # run bench marking - 100 cases
-# benchmark(100)
+benchMark()
+
+
