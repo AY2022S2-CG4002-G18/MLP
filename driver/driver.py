@@ -17,7 +17,9 @@ BIT_PATH = "./driver_content/MLP2/mlp.bit"
 test_input_90 = test_data[0]
 test_input_90 = test_input_90[0:90]
 
-
+# ol.is_loaded
+# ol.bitfile_name
+# ol.pr_dict
 class Driver:
     def __init__(self):
         self._initialise()
@@ -25,7 +27,7 @@ class Driver:
     def _initialise(self):
         print("Initiating dirver")
         self.ol = Overlay(BIT_PATH)
-        self.ol.reset()
+        # self.ol.reset()
         self.dma = self.ol.axi_dma_0
 
         print("Allocated buffer")
@@ -52,13 +54,13 @@ class Driver:
         
         print("Send data to DMA")
         self.dma.sendchannel.transfer(self.input_buffer)
-        
-        print("Waiting on send channel")
-        self.dma.sendchannel.wait()
-
         print("Transfer output buffer")
         self.dma.recvchannel.transfer(self.output_buffer)
         
+
+        
+        print("Waiting on send channel")
+        self.dma.sendchannel.wait()
         print("Waiting to receive...")
         self.dma.recvchannel.wait()
         
