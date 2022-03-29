@@ -33,7 +33,7 @@ int main() {
 
 	// define input and output array
 	float input[240];
-	float output[6];
+	float output[4];
 
 
 	std::string line;
@@ -66,7 +66,7 @@ int main() {
 		MLP2(input_stream, output_stream);
 
 		// output size is 6
-		for (int i = 0; i < 6; i ++){
+		for (int i = 0; i < 4; i ++){
 			read_stream = output_stream.read();
 			output[i] = read_stream.data;
 		}
@@ -74,13 +74,13 @@ int main() {
 		// MLE
 		int index = 0;
 		float max = -INFINITY;
-		for (int i = 0; i < 6; i ++){
+		for (int i = 0; i < 4; i ++){
 			if (output[i] > max){
 				index = i;
 				max = output[i];
 			}
 		}
-		std::cout << "Softmax Array:" << output[0] << "," << output[1] << "," << output[2] << "," <<  output[3] << "," << output[4] << "," << output[5] << std::endl;
+		std::cout << "Softmax Array:" << output[0] << "," << output[1] << "," << output[2] << "," <<  output[3] << std::endl;
 
 
 		// read output and compare
