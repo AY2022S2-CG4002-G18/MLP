@@ -20,4 +20,11 @@ for i in range(len(data)):
     dma.recvchannel.transfer(output_buffer)
     dma.sendchannel.wait()
     dma.recvchannel.wait()
-    print(output_buffer)
+    
+    max_val = 0
+    out_index = 0
+    for i in range(0,len(output_buffer)):
+        if output_buffer[i] > max_val:
+            max_val = output_buffer[i]
+            out_index = i
+    print(output_buffer, i)
