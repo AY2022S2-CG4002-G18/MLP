@@ -32,8 +32,8 @@ int main() {
 	label_file.open("test_label.dat");
 
 	// define input and output array
-	int input[192];
-	int output[4];
+	float input[192];
+	float output[4];
 
 
 	std::string line;
@@ -43,7 +43,6 @@ int main() {
 	while(std::getline(input_file, line) && test_count < 10000){
 		test_count ++;
 		total ++;
-
 		std::stringstream ss(line);
 		float val;
 		for (int i = 0; i < 192; i ++){
@@ -51,7 +50,7 @@ int main() {
 			input[i] = val;
 		}
 
-		// put data into input, input size = 240
+		// put data into input, input size = 192
 		for (int i = 0; i < 192; i ++){
 			write_stream.data = input[i];
 			write_stream.last = 0;
