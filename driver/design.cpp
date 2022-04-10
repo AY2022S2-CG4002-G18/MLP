@@ -1,4 +1,3 @@
-// #include "ap_axi_sdata.h" // ap_axis can also be used, but it will include all sideband signals which we don't need
 #include "hls_stream.h"
 #include "ap_int.h"
 #include "hls_math.h"
@@ -26,7 +25,7 @@ float relu(float x) {
 float dot_product(float a[], float b[], int n) {
 	float sum = 0;
 	for (int l = 0; l < n; l++) {
-		sum += a[l] * b[l] / QUANT_FACTOR;
+		sum += a[l] * b[l];
 	}
 	return sum;
 }
@@ -454,10 +453,10 @@ void MLP2(hls::stream<AXIS_wLAST>& S_AXIS, hls::stream<AXIS_wLAST>& M_AXIS){
 		layer_three_output[i] = relu(layer_three_output[i]);
 	}
 
-	//Hidden layer 3
-	myip_hidden4_hls: for (i = 0; i < HIDDEN4_SIZE; i++) {
-			layer_four_output[i] = dot_product(layer_four_weight[i], layer_three_output, HIDDEN3_SIZE) + layer_four_bias[i];
-			layer_four_output[i] = relu(layer_four_output[i]);
+	//Hidden layer 4
+	for (i = 0; i < HIDDEN4_SIZE; i++) {
+		layer_four_output[i] = dot_product(layer_four_weight[i], layer_three_output, HIDDEN3_SIZE) + layer_four_bias[i];
+		layer_four_output[i] = relu(layer_four_output[i]);
 	}
 
 	//Output layer
