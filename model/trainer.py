@@ -74,8 +74,8 @@ class Trainer:
         #     layers.Dense(units=6, activation='softmax')
         # ])
         model = Sequential()
-        model.add(Dense(192, input_dim=self.x_capstone_train.shape[1], activation='relu'))
-        model.add(Dense(96, activation='relu'))
+        model.add(Dense(96, input_dim=self.x_capstone_train.shape[1], activation='relu'))
+        model.add(Dense(48, activation='relu'))
         model.add(Dense(4, activation='softmax'))
         print(model.summary())
         self.model = model
