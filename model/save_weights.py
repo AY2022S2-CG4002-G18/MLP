@@ -4,7 +4,7 @@ from trainer import Trainer
 from dataset import get_data_frame
 from utils import save_2d_weight_to_txt_file, save_2d_weight_to_dat_file, save_1d_weight_to_txt_file, save_1d_weight_to_dat_file
 
-model = keras.models.load_model('04101415')
+model = keras.models.load_model('04101928')
 
 # print(len(model.trainable_variables[0]))
 
