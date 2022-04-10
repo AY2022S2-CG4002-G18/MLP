@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 
 QUANT_FACTOR = 2048
-QUANT = True
+QUANT = False
 
 def create_segments_and_labels(df, time_steps, step, label_name):
     # x, y, z acceleration as features
