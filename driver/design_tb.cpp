@@ -32,8 +32,8 @@ int main() {
 	label_file.open("test_label.dat");
 
 	// define input and output array
-	float input[192];
-	float output[4];
+	int input[192];
+	int output[4];
 
 
 	std::string line;
@@ -62,7 +62,6 @@ int main() {
 		}
 
 		// get output
-
 		MLP2(input_stream, output_stream);
 
 		// output size is 4
