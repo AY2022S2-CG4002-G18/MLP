@@ -92,7 +92,6 @@ int main() {
 		} else{
 			std::cout << " [incorrect]" << std::endl;
 		}
-		std::cout << std::endl;
 	}
 
 	std::cout << "Correct/Total - " << correct << "/" << total << std::endl;
