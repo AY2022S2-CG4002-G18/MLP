@@ -119,11 +119,11 @@ def benchMark():
     correct = 0
     total = len(test_label)
     total_time_used = []
-
+    driver = Driver()
+    
     for i in range(0, len(test_data)):
         # create a new driver
         total += 1
-        driver = Driver()
         time_start = time()
         buffer = driver.predict(test_data[i])
         time_used = time() - time_start
