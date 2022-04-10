@@ -120,7 +120,7 @@ def benchMark():
     total = len(test_label)
     total_time_used = []
     driver = Driver()
-    
+
     for i in range(0, len(test_data)):
         # create a new driver
         total += 1
@@ -135,7 +135,7 @@ def benchMark():
         else:
             print("Incorrect prediction", buffer, result, label_list[i])
     
-    print(correct/total)
+    print(f"Correct - total {correct}/{total}")
     print("Time Used")
     print(time_used)
 
