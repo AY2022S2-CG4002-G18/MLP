@@ -36,7 +36,7 @@ class Driver:
     def predict_non_verbose(self, x):
         x = x.astype(np.float32)
         # normalize
-        x /= np.max(np.abs(x), axis=0)
+        # x /= np.max(np.abs(x), axis=0)
 
         for i in range(len(x)):
             self.input_buffer[i] = x[i]
@@ -51,7 +51,7 @@ class Driver:
         # x = (x * 1024).astype(np.int32)
         x = x.astype(np.int32)
         # normalize
-        x /= np.max(np.abs(x), axis=0)
+        # x /= np.max(np.abs(x), axis=0)
         print("Initialise input buffer")
         for i in range(len(x)):
             self.input_buffer[i] = x[i]
