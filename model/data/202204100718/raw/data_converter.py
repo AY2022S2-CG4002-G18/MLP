@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+import numpy as np
 
 FILENAME = "sw3.txt"
 MAX_ID = 70 # The last data item
@@ -40,7 +41,13 @@ class DataItem:
             for i in range(0,to_pad):
                 res.append(0)
 
-        return res
+        # normalize here
+        arr = np.array(res)
+        float_arr = arr.astype(np.float32)
+        float_arr /= np.max(np.abs(float_arr), axis=0)
+        normalized_list = float_arr.tolist()
+
+        return normalized_list
 
 class DataConverter:
     def __init__(self, f):

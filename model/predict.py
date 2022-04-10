@@ -1,7 +1,7 @@
 from tensorflow import keras
 import numpy as np
 
-model = keras.models.load_model('04101034')
+model = keras.models.load_model('04101313')
 
 def predict(data):
     if len(data) < 192:
@@ -10,7 +10,10 @@ def predict(data):
         for i in range(0,to_pad):
             data.append(0)
     np_input = np.array([data])
-    y = model.predict(x=np_input)
+    float_arr = np_input.astype(np.float32)
+    float_arr /= np.max(np.abs(float_arr), axis=0)
+
+    y = model.predict(x=float_arr)
     
     max_index = 0
     max_prob = 0
@@ -51,8 +54,8 @@ class DataItem:
         res = []
         res = self.gx + self.gy + self.gz + self.ax + self.ay + self.az
         
-        if len(res) < 240:
-            to_pad = 240 - len(res)
+        if len(res) < 192:
+            to_pad = 192 - len(res)
             for i in range(0,to_pad):
                 res.append(0)
 
