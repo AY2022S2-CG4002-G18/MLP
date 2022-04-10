@@ -4,7 +4,7 @@ from trainer import Trainer
 from dataset import get_data_frame
 from utils import save_2d_weight_to_txt_file, save_2d_weight_to_dat_file, save_1d_weight_to_txt_file, save_1d_weight_to_dat_file
 
-model = keras.models.load_model('04101232')
+model = keras.models.load_model('04101240')
 
 # print(len(model.trainable_variables[0]))
 
@@ -17,7 +17,7 @@ model = keras.models.load_model('04101232')
 # trainer.model = model
 # trainer.visualize_testing_result()
 
-print(model.trainable_variables[6].numpy().shape)
+# print(model.trainable_variables[6].numpy().shape)
 print(model.summary())
 
 # Save weights into C++ Arrays for Copy Pasting
@@ -60,18 +60,18 @@ save_1d_weight_to_txt_file(layer3_bias_array, "./weights_files/layer3_bias.txt")
 save_1d_weight_to_dat_file(layer3_bias_array, "./weights_files/layer3_bias.dat")
 print("Saved Layer 3 bias")
 
-## Layer 4
-layer4_weights_object = model.trainable_variables[6]
-layer4_weights_array = layer4_weights_object.numpy()
-save_2d_weight_to_txt_file(layer4_weights_array, "./weights_files/layer4_weight.txt")
-save_2d_weight_to_dat_file(layer4_weights_array, "./weights_files/layer4_weight.dat")
-print("Saved Layer 4 weight")
+# ## Layer 4
+# layer4_weights_object = model.trainable_variables[6]
+# layer4_weights_array = layer4_weights_object.numpy()
+# save_2d_weight_to_txt_file(layer4_weights_array, "./weights_files/layer4_weight.txt")
+# save_2d_weight_to_dat_file(layer4_weights_array, "./weights_files/layer4_weight.dat")
+# print("Saved Layer 4 weight")
 
-layer4_bias_object = model.trainable_variables[7]
-layer4_bias_array = layer4_bias_object.numpy()
-save_1d_weight_to_txt_file(layer4_bias_array, "./weights_files/layer4_bias.txt")
-save_1d_weight_to_dat_file(layer4_bias_array, "./weights_files/layer4_bias.dat")
-print("Saved Layer 4 bias")
+# layer4_bias_object = model.trainable_variables[7]
+# layer4_bias_array = layer4_bias_object.numpy()
+# save_1d_weight_to_txt_file(layer4_bias_array, "./weights_files/layer4_bias.txt")
+# save_1d_weight_to_dat_file(layer4_bias_array, "./weights_files/layer4_bias.dat")
+# print("Saved Layer 4 bias")
 
 ## Layer 5
 # layer5_weights_object = model.trainable_variables[8]
