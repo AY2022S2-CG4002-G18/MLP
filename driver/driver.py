@@ -49,7 +49,7 @@ class Driver:
     def predict(self, x):
         #quantise input
         # x = (x * 1024).astype(np.int32)
-        x = x.astype(np.int32)
+        # x = x.astype(np.int32)
         # normalize
         # x /= np.max(np.abs(x), axis=0)
         print("Initialise input buffer")
