@@ -4,7 +4,7 @@ import random
 FILENAME = "sw3.txt"
 MAX_ID = 70 # The last data item
 TEST_ID_RANGE = [60,70]
-ROW_LENGTH = 276
+ROW_LENGTH = 32 * 6
 
 class DataItem:
     def __init__(self):
@@ -14,6 +14,7 @@ class DataItem:
         self.ax = []
         self.ay = []
         self.az = []
+        self.arr = []
     
     def append_to_dataitem(self, data_array):
         self.gx.append(data_array[0])
@@ -22,13 +23,20 @@ class DataItem:
         self.ax.append(data_array[3])
         self.ay.append(data_array[4])
         self.az.append(data_array[5])
+
+        self.arr.append(data_array[0])
+        self.arr.append(data_array[1])
+        self.arr.append(data_array[2])
+        self.arr.append(data_array[3])
+        self.arr.append(data_array[4])
+        self.arr.append(data_array[5])
     
     def convert_to_single_array(self):
         res = []
         res = self.gx + self.gy + self.gz + self.ax + self.ay + self.az
         
-        if len(res) < 276:
-            to_pad = 276 - len(res)
+        if len(res) < ROW_LENGTH:
+            to_pad = ROW_LENGTH - len(res)
             for i in range(0,to_pad):
                 res.append(0)
 
@@ -69,6 +77,9 @@ class DataConverter:
         list_to_save = list_to_save + [val for val in accz]
         list_to_save_string = str(list_to_save)[1:-1]
 
+        if not len(list_to_save) == ROW_LENGTH:
+            print("Corrupted row")
+
         f = open(output_datafile, "a")
         f.write(list_to_save_string)
 
@@ -93,14 +104,14 @@ class DataConverter:
             df = pd.read_csv(filename, header=None)
             data_arr = df.to_numpy()[0].tolist()
             
-            if len(data_arr) < 276:
-                # pad until 276
-                to_pad = 276 - len(data_arr)
+            if len(data_arr) < ROW_LENGTH:
+                # pad until ROW_LENGTH
+                to_pad = ROW_LENGTH - len(data_arr)
                 for i in range(to_pad):
                     data_arr.append(0)
-            elif len(data_arr) > 276:
-                # reduce until 276
-                data_arr = data_arr[:276]
+            elif len(data_arr) > ROW_LENGTH:
+                # reduce until ROW_LENGTH
+                data_arr = data_arr[:ROW_LENGTH]
                 
             data_matrix.append(data_arr)
         
@@ -139,29 +150,29 @@ class DataConverter:
         l2 = df_2.to_numpy()[0].tolist()
 
         # get list 1
-        if len(l1) < 276:
-                # pad until 276
-            to_pad = 276 - len(l1)
+        if len(l1) < ROW_LENGTH:
+                # pad until ROW_LENGTH
+            to_pad = ROW_LENGTH - len(l1)
             for i in range(to_pad):
                 l1.append(0)
-        elif len(l1) > 276:
-            # reduce until 276
-            l1 = l1[:276]
+        elif len(l1) > ROW_LENGTH:
+            # reduce until ROW_LENGTH
+            l1 = l1[:ROW_LENGTH]
         
         # get list 2
-        if len(l2) < 276:
-                # pad until 276
-            to_pad = 276 - len(l2)
+        if len(l2) < ROW_LENGTH:
+                # pad until ROW_LENGTH
+            to_pad = ROW_LENGTH - len(l2)
             for i in range(to_pad):
                 l2.append(0)
-        elif len(l1) > 276:
-            # reduce until 276
-            l2 = l2[:276]
+        elif len(l1) > ROW_LENGTH:
+            # reduce until ROW_LENGTH
+            l2 = l2[:ROW_LENGTH]
 
         # generate list 3
         i = 0
         l3 = []
-        while i < 276:
+        while i < ROW_LENGTH:
             avg = int((l1[i] + l2[i])/2)
             l3.append(avg)
             i += 1
@@ -185,8 +196,11 @@ class DataConverter:
                 if line == str(label) + '\n' or line == str(label):
                     # end of current data item
                     res = data_item.convert_to_single_array() # convert into single array
-                    data.append(res)
-                    labels.append(label)
+                    if len(res) == ROW_LENGTH:
+                        data.append(res)
+                        labels.append(label)
+                    else:
+                        print("Skip inconsistent length row")
 
                     # reset data struct
                     data_item = DataItem()
@@ -244,24 +258,65 @@ class DataConverter:
             lines = f.readlines()
             for line in lines:
                 str_tokens = line[:-1].split(',')
-                if not len(str_tokens) == 276:
+                if not len(str_tokens) == ROW_LENGTH:
                     print(line)
                     return 
         
 dc = DataConverter(FILENAME)
 # dc.convert_to_datafile()
 
-# dc.append_to_datafile_from_single_source("data0.txt", 0, "data.csv", "label.csv")
+
 # dc.append_to_datafile_from_single_source("data1.txt", 1, "data.csv", "label.csv")
 # dc.append_to_datafile_from_single_source("data2.txt", 2, "data.csv", "label.csv")
 # dc.append_to_datafile_from_single_source("data3.txt", 3, "data.csv", "label.csv")
 
-dc.train_test_split('data.csv', 'label.csv', 'data_train.csv', 'label_train.csv', 'data_test.csv', 'label_test.csv', 0.10)
+# 202204100718
+# dc.append_to_datafile_from_single_source("data0jo.txt", 0, "data0.csv", "label0.csv")
+# dc.append_to_datafile_from_single_source("data0lp.txt", 0, "data0.csv", "label0.csv") # Has one error row, corrected
+# dc.append_to_datafile_from_single_source("data0sug.txt", 0, "data0.csv", "label0.csv") # Has three error rows, corrected
+# dc.append_to_datafile_from_single_source("data0bobnhaitao.txt", 0, "data0.csv", "label0.csv") # Has three error rows, corrected
 
-# dc.verify_datafile('data_train.csv')
+# dc.append_to_datafile_from_single_source("data1jo.txt", 1, "data1.csv", "label1.csv")
+# dc.append_to_datafile_from_single_source("data1ht.txt", 1, "data1.csv", "label1.csv")
+# dc.append_to_datafile_from_single_source("data1lp.txt", 1, "data1.csv", "label1.csv")
+# dc.append_to_datafile_from_single_source("data1bob.txt", 1, "data1.csv", "label1.csv")
+# dc.append_to_datafile_from_single_source("data1sug.txt", 1, "data1.csv", "label1.csv")
+
+# dc.append_to_datafile_from_single_source("data2jo.txt", 2, "data2.csv", "label2.csv")
+# dc.append_to_datafile_from_single_source("data2lp.txt", 2, "data2.csv", "label2.csv")
+# dc.append_to_datafile_from_single_source("data2bobnht.txt", 2, "data2.csv", "label2.csv")
+# dc.append_to_datafile_from_single_source("data2sug.txt", 2, "data2.csv", "label2.csv")
+
+# dc.append_to_datafile_from_single_source("data3jo.txt", 3, "data3.csv", "label3.csv")
+# dc.append_to_datafile_from_single_source("data3lp.txt", 3, "data3.csv", "label3.csv")
+# dc.append_to_datafile_from_single_source("data3bobnhaitao.txt", 3, "data3.csv", "label3.csv")
+# dc.append_to_datafile_from_single_source("data3sug.txt", 3, "data3.csv", "label3.csv")
+# ---- done ----
+
+dc.append_to_datafile_from_single_source("data0jo.txt", 0, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data0lp.txt", 0, "data.csv", "label.csv") # Has one error row, corrected
+dc.append_to_datafile_from_single_source("data0sug.txt", 0, "data.csv", "label.csv") # Has three error rows, corrected
+dc.append_to_datafile_from_single_source("data0bobnhaitao.txt", 0, "data.csv", "label.csv") # Has three error rows, corrected
+
+dc.append_to_datafile_from_single_source("data1jo.txt", 1, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data1ht.txt", 1, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data1lp.txt", 1, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data1bob.txt", 1, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data1sug.txt", 1, "data.csv", "label.csv")
+
+dc.append_to_datafile_from_single_source("data2jo.txt", 2, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data2lp.txt", 2, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data2bobnht.txt", 2, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data2sug.txt", 2, "data.csv", "label.csv")
+
+dc.append_to_datafile_from_single_source("data3jo.txt", 3, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data3lp.txt", 3, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data3bobnhaitao.txt", 3, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data3sug.txt", 3, "data.csv", "label.csv")
+# dc.verify_datafile('data.csv')
 # dc.verify_datafile('data_test.csv')
 
-
+dc.train_test_split('data.csv', 'label.csv', 'data_train.csv', 'label_train.csv', 'data_test.csv', 'label_test.csv', 0.10)
 # merge to test
 # dc.merge_data(TEST_ID_RANGE[0], TEST_ID_RANGE[1], "data_test.csv")
 # merge to train
@@ -278,6 +333,5 @@ dc.train_test_split('data.csv', 'label.csv', 'data_train.csv', 'label_train.csv'
 
 # df = pd.read_csv("3.txt", header=None)
 # data_arr = df.to_numpy()[0].tolist()
-# data_arr = data_arr[:276]
 # print(len(data_arr))
 # print(str(data_arr)[1:-1])

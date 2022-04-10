@@ -74,11 +74,10 @@ class Trainer:
         #     layers.Dense(units=6, activation='softmax')
         # ])
         model = Sequential()
-        model.add(Dense(276, input_dim=self.x_capstone_train.shape[1], activation='relu'))
-        model.add(Dense(128, activation='relu'))
-        model.add(Dense(64, activation='relu'))
-        # WISDM dataset has 6 categories, capstone only 4
-        # model.add(Dense(self.le.classes_.size, activation='softmax'))
+        model.add(Dense(192, input_dim=self.x_capstone_train.shape[1], activation='relu'))
+        model.add(Dense(96, activation='relu'))
+        model.add(Dense(48, activation='relu'))
+        model.add(Dense(24, activation='relu'))
         model.add(Dense(4, activation='softmax'))
         print(model.summary())
         self.model = model
@@ -108,7 +107,6 @@ class Trainer:
         self.df_train['z-axis'] = self.df_train['z-axis'] / self.df_train['z-axis'].max()
         # Round numbers
         self.df_train = self.df_train.round({'x-axis': 4, 'y-axis': 4, 'z-axis': 4})
-        
     
     def normalize_test(self):
         pd.options.mode.chained_assignment = None  # default='warn'
@@ -178,7 +176,9 @@ class Trainer:
 
         print(self.x_capstone_train.shape)
         print(self.y_capstone_train_hot.shape)
-
+        
+        # normalize
+        # self.x_capstone_train=(self.x_capstone_train-self.x_capstone_train.mean())/self.x_capstone_train.std()
         self.x_capstone_train = self.x_capstone_train.astype('float32')
 
         # Enable validation to use ModelCheckpoint and EarlyStopping callbacks.
@@ -187,7 +187,7 @@ class Trainer:
                             batch_size=BATCH_SIZE,
                             epochs=EPOCHS,
                             callbacks=callbacks_list,
-                            validation_split=0.3,
+                            validation_split=0.2,
                             verbose=1)
     
     def visualize_training_result(self):
