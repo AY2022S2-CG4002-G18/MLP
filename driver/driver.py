@@ -133,7 +133,7 @@ def benchMark():
         time_used = time() - time_start
         total_time_used.append(time_used)
 
-        result = self.softmax(buffer)
+        result = driver.softmax(buffer)
 
         max_prob = 0
         best_guess = 0
