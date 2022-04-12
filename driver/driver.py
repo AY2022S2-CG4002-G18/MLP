@@ -150,13 +150,13 @@ def benchMark():
         result = np.argmax(buffer, axis=0)
         if not confident:
             inconlusive += 1
-            print("Not conclusive", result, best_guess, label_list[i])
+            print("Not conclusive", result, buffer, label_list[i])
         else:
-            if (best_guess == label_list[i]):
-                print("Correct prediction", result, best_guess, label_list[i])
+            if (result == label_list[i]):
+                print("Correct prediction", result, buffer, label_list[i])
                 correct += 1
-            elif (best_guess != label_list[i]):
-                print("Incorrect prediction", result, best_guess, label_list[i])
+            elif (result != label_list[i]):
+                print("Incorrect prediction", result, buffer, label_list[i])
     
     print(f"Correct - total {correct}/{total}, Inconclusive: {inconlusive}")
     print("Time Used")
