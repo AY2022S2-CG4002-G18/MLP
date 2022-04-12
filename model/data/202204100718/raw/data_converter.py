@@ -311,6 +311,7 @@ dc.append_to_datafile_from_single_source("data0bobglove2.txt", 0, "data.csv", "l
 
 dc.append_to_datafile_from_single_source("data1jo.txt", 1, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data1jo2.txt", 1, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data1jog2.txt", 1, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data1ht.txt", 1, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data1lp.txt", 1, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data1lp2.txt", 1, "data.csv", "label.csv")

@@ -11,7 +11,7 @@ test_data = np.loadtxt('./driver_content/test_data/test_data.dat', dtype=np.floa
 test_label = np.loadtxt('./driver_content/test_data/test_label.dat', dtype=np.int8)
 print("Test data loaded")
 
-BIT_PATH = "./driver_content/mlp2000.bit"
+BIT_PATH = "./driver_content/mlp1039.bit"
 
 test_input_90 = test_data[0]
 test_input_90 = test_input_90[0:90]
@@ -144,7 +144,7 @@ def benchMark():
                 max_prob = result[idx]
                 best_guess = idx
         
-        if max_prob < 0.6:
+        if max_prob < 0.3:
             confident = False
 
         # result = np.argmax(buffer, axis=0)
