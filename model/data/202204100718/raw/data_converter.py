@@ -307,6 +307,7 @@ dc.append_to_datafile_from_single_source("data0lp2.txt", 0, "data.csv", "label.c
 dc.append_to_datafile_from_single_source("data0sug.txt", 0, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data0sug2.txt", 0, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data0bobnhaitao.txt", 0, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data0bobglove2.txt", 0, "data.csv", "label.csv")
 
 dc.append_to_datafile_from_single_source("data1jo.txt", 1, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data1jo2.txt", 1, "data.csv", "label.csv")
@@ -316,6 +317,7 @@ dc.append_to_datafile_from_single_source("data1lp2.txt", 1, "data.csv", "label.c
 dc.append_to_datafile_from_single_source("data1sug.txt", 1, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data1sug2.txt", 1, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data1bob.txt", 1, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data1bobg2.txt", 1, "data.csv", "label.csv")
 
 dc.append_to_datafile_from_single_source("data2jo.txt", 2, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data2jo2.txt", 2, "data.csv", "label.csv")
@@ -324,12 +326,14 @@ dc.append_to_datafile_from_single_source("data2lp2.txt", 2, "data.csv", "label.c
 dc.append_to_datafile_from_single_source("data2sug.txt", 2, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data2sug2.txt", 2, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data2bobnht.txt", 2, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data2bobg2.txt", 2, "data.csv", "label.csv")
 
 dc.append_to_datafile_from_single_source("data3jo.txt", 3, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data3jo2.txt", 3, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data3lp.txt", 3, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data3lp2.txt", 3, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data3bobnhaitao.txt", 3, "data.csv", "label.csv")
+dc.append_to_datafile_from_single_source("data3bobg2.txt", 3, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data3sug.txt", 3, "data.csv", "label.csv")
 dc.append_to_datafile_from_single_source("data3sug2.txt", 3, "data.csv", "label.csv")
 # dc.verify_datafile('data.csv')
