@@ -11,7 +11,7 @@ test_data = np.loadtxt('./driver_content/test_data/test_data.dat', dtype=np.floa
 test_label = np.loadtxt('./driver_content/test_data/test_label.dat', dtype=np.int8)
 print("Test data loaded")
 
-BIT_PATH = "./driver_content/mlp0421A.bit"
+BIT_PATH = "./driver_content/mlp2239.bit"
 
 test_input_90 = test_data[0]
 test_input_90 = test_input_90[0:90]
