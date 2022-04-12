@@ -138,23 +138,23 @@ def benchMark():
         max_prob = 0
         best_guess = 0
         confident = True
-        for i in range(0, len(result)):
-            if result[i] > max_prob:
+        for idx in range(0, len(result)):
+            if result[idx] > max_prob:
                 max_prob = result[i]
-                best_guess = i
+                best_guess = idx
         
         if max_prob < 0.6:
             confident = False
 
         # result = np.argmax(buffer, axis=0)
         if not confident:
-            print("Not conclusive", buffer, result, label_list[best_guess])
+            print("Not conclusive", buffer, best_guess, label_list[i])
         else:
-            if (result == label_list[best_guess]):
-                print("Correct prediction", buffer, result, label_list[best_guess])
+            if (best_guess == label_list[i]):
+                print("Correct prediction", buffer, best_guess, label_list[i])
                 correct += 1
-            elif (result != label_list[best_guess]):
-                print("Incorrect prediction", buffer, result, label_list[best_guess])
+            elif (best_guess != label_list[i]):
+                print("Incorrect prediction", buffer, best_guess, label_list[i])
     
     print(f"Correct - total {correct}/{total}")
     print("Time Used")
