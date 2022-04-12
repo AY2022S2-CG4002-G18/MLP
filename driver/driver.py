@@ -144,8 +144,8 @@ def benchMark():
                 max_prob = result[idx]
                 best_guess = idx
         
-        if max_prob < 0.3:
-            confident = False
+        # if max_prob < 0.3:
+        #     confident = False
 
         # result = np.argmax(buffer, axis=0)
         if not confident:
