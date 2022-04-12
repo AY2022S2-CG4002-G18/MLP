@@ -140,7 +140,7 @@ def benchMark():
         confident = True
         for idx in range(0, len(result)-1):
             if result[idx] > max_prob:
-                max_prob = result[i]
+                max_prob = result[idx]
                 best_guess = idx
         
         if max_prob < 0.6:
