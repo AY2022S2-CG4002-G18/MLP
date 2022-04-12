@@ -139,15 +139,15 @@ def benchMark():
         max_prob = 0
         best_guess = 0
         confident = True
-        for idx in range(0, len(result)-1):
-            if result[idx] > max_prob:
-                max_prob = result[idx]
-                best_guess = idx
+        # for idx in range(0, len(result)-1):
+        #     if result[idx] > max_prob:
+        #         max_prob = result[idx]
+        #         best_guess = idx
         
         # if max_prob < 0.3:
         #     confident = False
 
-        # result = np.argmax(buffer, axis=0)
+        result = np.argmax(buffer, axis=0)
         if not confident:
             inconlusive += 1
             print("Not conclusive", result, best_guess, label_list[i])
