@@ -150,10 +150,10 @@ def benchMark():
         if not confident:
             print("Not conclusive", buffer, result, label_list[best_guess])
         else:
-            if (result == label_list[i]):
+            if (result == label_list[best_guess]):
                 print("Correct prediction", buffer, result, label_list[best_guess])
                 correct += 1
-            elif (result != label_list[i]):
+            elif (result != label_list[best_guess]):
                 print("Incorrect prediction", buffer, result, label_list[best_guess])
     
     print(f"Correct - total {correct}/{total}")
