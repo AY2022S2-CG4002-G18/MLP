@@ -125,6 +125,7 @@ def benchMark():
     total = len(test_label)
     total_time_used = []
     driver = Driver()
+    inconlusive = 0
 
     for i in range(0, len(test_data)):
         # create a new driver
@@ -148,15 +149,16 @@ def benchMark():
 
         # result = np.argmax(buffer, axis=0)
         if not confident:
-            print("Not conclusive", buffer, best_guess, label_list[i])
+            inconlusive += 1
+            print("Not conclusive", result, best_guess, label_list[i])
         else:
             if (best_guess == label_list[i]):
-                print("Correct prediction", buffer, best_guess, label_list[i])
+                print("Correct prediction", result, best_guess, label_list[i])
                 correct += 1
             elif (best_guess != label_list[i]):
-                print("Incorrect prediction", buffer, best_guess, label_list[i])
+                print("Incorrect prediction", result, best_guess, label_list[i])
     
-    print(f"Correct - total {correct}/{total}")
+    print(f"Correct - total {correct}/{total}, Inconclusive: {inconlusive}")
     print("Time Used")
     print(time_used)
 
