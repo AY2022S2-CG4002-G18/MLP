@@ -79,6 +79,11 @@ class Driver:
                 correct += 1
         return correct,total
 
+    def softmax(x):
+        """Compute softmax values for each sets of scores in x."""
+        e_x = np.exp(x - np.max(x))
+        return e_x / e_x.sum()        
+
 def predict_once():
     ol = Overlay(BIT_PATH)
     x = test_data[0].astype(np.float32)
@@ -127,12 +132,29 @@ def benchMark():
         buffer = driver.predict(test_data[i])
         time_used = time() - time_start
         total_time_used.append(time_used)
-        result = np.argmax(buffer, axis=0)
-        if (result == label_list[i]):
-            print("Correct prediction", buffer, result, label_list[i])
-            correct += 1
+
+        result = self.softmax(buffer)
+
+        max_prob = 0
+        best_guess = 0
+        confident = True
+        for i in range(0, len(result)):
+            if result[i] > max_prob:
+                max_prob = result[i]
+                best_guess = i
+        
+        if max_prob < 0.6:
+            confident = False
+
+        # result = np.argmax(buffer, axis=0)
+        if not confident:
+            print("Not conclusive", buffer, result, label_list[best_guess])
         else:
-            print("Incorrect prediction", buffer, result, label_list[i])
+            if (result == label_list[i]):
+                print("Correct prediction", buffer, result, label_list[best_guess])
+                correct += 1
+            else (result != label_list[i]):
+                print("Incorrect prediction", buffer, result, label_list[best_guess])
     
     print(f"Correct - total {correct}/{total}")
     print("Time Used")
