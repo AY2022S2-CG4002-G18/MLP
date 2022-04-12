@@ -153,7 +153,7 @@ def benchMark():
             if (result == label_list[i]):
                 print("Correct prediction", buffer, result, label_list[best_guess])
                 correct += 1
-            else (result != label_list[i]):
+            elif (result != label_list[i]):
                 print("Incorrect prediction", buffer, result, label_list[best_guess])
     
     print(f"Correct - total {correct}/{total}")
